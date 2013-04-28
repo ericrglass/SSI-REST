@@ -1,0 +1,8 @@
+<script src="js/jquery-1.9.1.min.js"></script>
+<script>
+  // polyfill for HTML5 placeholders
+  Modernizr.load({
+    test: Modernizr.input.placeholder,
+    nope: 'js/plugins/placeholder_polyfill.jquery-2.0.6.min.js'
+  });
+</script>

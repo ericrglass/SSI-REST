@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+<!--#include file="includes/meta.html" -->
+<title data-bind="text: i18n.title">Welcome</title>
+<!--#include file="includes/cssModernizrIEConditionals.html" -->
+<!-- Web page specific css and IE conditional comments goes here... -->
+<!--#include file="includes/headModernizrScript.html" -->
+</head>
+<body class="no-js">
+  <header class="container pad-top">
+    <h2 data-bind="text: i18n.title">Welcome</h2>
+  </header>
+  <div id="mainContent" class="container pad-bottom">
+    <article class="row">
+      <h3 data-bind="text: i18n.articleCaption">The Server Side Includes with RESTful Web application is running.</h3>
+      <aside class="one fourth padded">
+        <h4 data-bind="text: i18n.codeMaintNavCaption">Code Maintenance</h4>
+        <nav class="nav">
+          <ul>
+            <li><a href="discountCode.html" data-bind="text: i18n.navDiscountCode">Discount Code</a></li>
+          </ul>
+        </nav>
+        <h4 class="pad-top double" data-bind="text: i18n.stylingNavCaption">Styling</h4>
+        <nav class="nav">
+          <ul>
+            <li><a href="kitchenSink.html" data-bind="text: i18n.navKitchenSink">GroundworkCSS - Kitchen Sink</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="three fourths padded border-left">
+        <h3 data-bind="text: i18n.appFeaturesCaption">This Java Enterprise Edition 6 Web application has the following features.</h3>
+        <ul>
+          <li data-bind="text: i18n.appFeature1">Clean semantic HTML5 mark-up</li>
+          <li data-bind="text: i18n.appFeature2">CSS3 Responsive Web Design with mobile first</li>
+          <li data-bind="text: i18n.appFeature3">Modernizr, jQuery, polyfill, and plug-in JavaScript libraries</li>
+          <li data-bind="text: i18n.appFeature4">Utilizing <a href="http://groundworkcss.github.com">GroundworkCSS</a>, a CSS3, SASS, and JavaScript framework that makes responsive design easy</li>
+          <li data-bind="text: i18n.appFeature5">Server side includes (SSI) with the Apache Tomcat Java SSI Servlet</li>
+          <li data-bind="text: i18n.appFeature6">Dynamic content with Java API for RESTful Web Services (JAX-RS) 1.1</li>
+          <li data-bind="text: i18n.appFeature7">Java Persistence API (JPA) 2.1 Entity Java objects</li>
+          <li data-bind="text: i18n.appFeature8">The Jackson Java JSON-processor is utilized to extend JAX-RS, along with its annotations</li>
+          <li data-bind="text: i18n.appFeature9">Production mode features for browser performance</li>
+        </ul>
+      </section>
+    </article>
+  </div>
+<!--#include file="includes/footer.html" -->
+<!--#include file="includes/jqueryWithFirstJavaScriptLibraries.html" -->
+<!-- Web page specific JavaScript libraries goes here... -->
+<!--#include file="includes/scriptBeforeBodyEnd.html" -->
+<!-- Web page specific script goes here... -->
+</body>
+</html>
