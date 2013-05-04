@@ -17,7 +17,7 @@ This Java Enterprise Edition 6 Web application has the following features
 * Clean semantic HTML5 mark-up
 * CSS3 Responsive Web Design with mobile first
 * [Modernizr](http://modernizr.com/), [jQuery](http://jquery.com/), polyfill, and plug-in JavaScript libraries
-* Utilizing [GroundworkCSS](http://groundworkcss.github.com), a CSS3, SASS, and JavaScript framework that makes responsive design easy
+* Utilizing [GroundworkCSS](http://groundworkcss.github.com), [bootstrap-sass](https://github.com/thomas-mcdonald/bootstrap-sass), a CSS3, SASS, and JavaScript framework that makes responsive design easy
 * Server side includes (SSI) with the [Apache Tomcat Java SSI Servlet](http://tomcat.apache.org/tomcat-5.5-doc/ssi-howto.html)
 * Dynamic content with [Java API for RESTful Web Services (JAX-RS)](http://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services) 1.1
 * The [Jackson Java JSON-processor](http://jackson.codehaus.org/) is utilized to extend JAX-RS, along with its annotations
