@@ -1,0 +1,24 @@
+// jQuery dataTables classses
+.dataTables_wrapper {
+  .dataTables-row {
+    @include gridRow;
+    .dataTables-row-left {
+      @include allColumns;
+    }
+   .dataTables-row-right {
+      @include allColumns;
+    }
+  }
+}
+
+.dataTables_filter {
+  @include firstColumn;
+//  label > input {
+//    width: 90%;
+//  }
+}
+
+.dataTables_paginate {
+  @include firstColumn;
+	//  margin-top: .625em;
+}

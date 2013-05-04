@@ -8,12 +8,12 @@
 	<name>ssi-rest</name>
 	<description>ssi-rest Web Application</description>
 	<dependencies>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
+    </dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -32,6 +32,18 @@
 			<version>2.0.4</version>
 			<scope>compile</scope>
 		</dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.9.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.2</version>
+      <scope>compile</scope>
+    </dependency>
 	</dependencies>
 	<properties>
 		<netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>

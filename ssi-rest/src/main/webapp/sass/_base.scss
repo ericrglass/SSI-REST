@@ -1,0 +1,154 @@
+.hide {
+  display: none;
+	visibility: hidden;
+}
+
+// jQuery dataTables classses
+.dataTables_wrapper {
+  table {
+    margin-bottom: 0;
+  }
+  .dataTables-row {
+    @include gridRow;
+    margin: .25em 0;
+    border: 1px solid $tableBorder;
+    border-collapse: separate; // Done so we can round those corners!
+    *border-collapse: collapse; // IE7 can't round corners anyway
+    @include border-radius($baseBorderRadius);
+    .dataTables-row-left {
+      padding: .25em;
+      width: $five-twelfths;
+      @include firstColumn;
+    }
+    .dataTables-row-right {
+      padding: .25em;
+	    width: $seven-twelfths;
+      text-align: right;
+      @include lastColumn;
+    }
+  }
+}
+
+.dataTables_length {
+	label {
+    margin-bottom: 0;
+  }
+	label > select {
+	  width: auto;
+    margin-bottom: 0;
+  }
+}
+
+.dataTables_filter {
+	label {
+    margin-bottom: 0;
+	}
+	label > input {
+    margin-bottom: 0;
+	  height: auto;
+  }
+}
+
+.dataTables_info {
+}
+
+.dataTables_paginate {
+  border-collapse: separate; // Done so we can round those corners!
+  *border-collapse: collapse; // IE7 can't round corners anyway
+  @include border-radius($baseBorderRadius);
+  a {
+    display: inline-block;
+    padding: .25em .5em;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid $tableBorder;
+    border-left-width: 0;
+    font-size: .75em;
+  }
+  a:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+    *cursor: hand;
+  }
+  a:focus {
+    background-color: #f5f5f5;
+    cursor: pointer;
+    *cursor: hand;
+  }
+  a.paginate_active {
+    background-color: #f5f5f5;
+    color: #999999;
+    cursor: default;
+  }
+  a.paginate_button_disabled {
+    color: #999999;
+    cursor: default;
+    background-color: transparent;
+  }
+}
+
+.paging_full_numbers {
+  a.first {
+    border-left-width: 1px;
+    @include border-left-radius(4px);
+  }
+  a.last {
+    @include border-right-radius(4px);
+  }
+}
+
+table.dataTable {
+  thead th.sorting {
+    cursor: pointer;
+    *cursor: hand;
+    // background: url('../img/sort_both.png') no-repeat center right;
+  }
+  thead th.sorting_asc {
+    cursor: pointer;
+    *cursor: hand;
+    // background: url('../img/sort_asc.png') no-repeat center right;
+  }
+  thead th.sorting_desc {
+    cursor: pointer;
+    *cursor: hand;
+    // background: url('../img/sort_desc.png') no-repeat center right;
+  }
+  thead th.sorting_asc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+    // background: url('../img/sort_asc_disabled.png') no-repeat center right;
+  }
+  thead th.sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+    // background: url('../img/sort_desc_disabled.png') no-repeat center right;
+  }
+}
+
+// groundwork navigation enhancements
+.breadcrumbs li.crumb-active a {
+  text-decoration: none;
+}
+.breadcrumbs li.crumb-active a:hover {
+  color: gray;
+}
+
+// bootstrap table enhancements
+// styles for thead
+thead {
+  tr {
+    th, td {
+      background:$button-color;
+      color:$button-text;
+    }
+  }
+}
+// styles for tfoot
+tfoot {
+  tr {
+    td {
+      background:lighten(gray, 37.5%);
+      color:darken(gray, 15%);
+    }
+  }
+}
