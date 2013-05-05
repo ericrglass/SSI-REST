@@ -57,6 +57,12 @@ Additional Setup
       * For example with JBoss AS 7.1 with a database server setup with the ssi_rest database, then you want the following to be uncommented
          * \<provider\>org.hibernate.ejb.HibernatePersistence\</provider\>
          * \<jta-data-source\>java:jboss/ssi_restDS\</jta-data-source\>
+* Here is some information about setting up a datasource in JBoss AS 7.1
+   * [JBoss AS 7.1 DataSource configuration](https://docs.jboss.org/author/display/AS71/DataSource+configuration)
+   * [vkslabs.com - Adding MySQL data source to JBoss 7.X](http://vkslabs.com/adding-mysql-data-store-to-jboss-7-x/)
+* Here is some information about setting up a datasource in GlassFish 3.1.2
+   * [Oracle GlassFish Server 3.1 Quick Start Guide - Configuring an Oracle Data Source](http://docs.oracle.com/cd/E18930_01/html/821-2432/gkyan.html)
+   * [itSolutionsForAll - How to create and configure JNDI DataSource for MySQL in GlassFish 3.1.1 Server](http://itsolutionsforall.com/datasource_jpa.php)
 
 TODO
 ----
