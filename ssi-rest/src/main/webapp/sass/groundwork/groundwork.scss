@@ -1,43 +1,22 @@
-@import "compass";
 /* =============================================
  *       GroundworkCSS by Gary Hepting
- *          Last Updated:2013-3-30
+ *          Last Updated:2013-4-24
  * ===========================================*/
 
-// variables & mixins
-@import "variables";
-@import "mixins";
 
-// set the stage
-@import "reset";
-@import "global";
+// custom settings
+@import "settings";         // customizable settings
 
-// webfonts
-@import "webfonts";
-
-// grid
-@import "grid";
+// core (required)
+@import "core/all";         // constants, defaults, mixins
+@import "base/all";         // reset, globals, grid, helpers, animations
 
 // components
-@import "typography";
-@import "buttons";
-@import "forms";
-@import "navigation";
-@import "tabs";
-@import "ui-elements";
-@import "tables";
-@import "font-awesome";
-@import "social-icons";
-@import "tooltips";
-// @import "popovers";
-@import "modals";
-@import "tiles";
-
-// CSS animations (required by helpers)
-@import "animations";
-
-// helper classes
-@import "helpers";
+@import "type/all";         // typography, font awesome, web fonts
+@import "nav/all";          // buttons, navigation, tabs
+@import "ui/all";           // messages, callouts, tables, tooltips, popovers, modals
+@import "form/all";         // forms, tiles
+@import "misc/all";         // social icons
 
 // responsive adjustments
-@import "responsive";
+@import "responsive/all";   // responsive navigation, tabs

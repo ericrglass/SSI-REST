@@ -1,12 +1,14 @@
-@import "compass";
-// =============================================
-//         IE hacks by Gary Hepting 
-//          Last Updated:2013-2-2
-// =============================================
+/* =============================================
+ *                 IE hacks
+ *          Last Updated:2013-4-24
+ * ===========================================*/
 
-// variables & mixins
-@import "variables";
-@import "mixins";
+
+// custom settings
+@import "settings";     // optional
+
+// core
+@import "core/all";         // required
 
 
 

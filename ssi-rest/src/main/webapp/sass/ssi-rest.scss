@@ -1,30 +1,17 @@
 @import "compass";
 
-// variables & mixins
-@import "groundwork/variables";
-@import "groundwork/mixins";
+// groundwork core -  variables\constants, defaults, mixins (required)
+@import "groundwork/core/all";
 
-// helper classes
-@import "groundwork/helpers";
-
-// set the stage
-@import "groundwork/reset";
-@import "groundwork/global";
-
-// webfonts
-@import "groundwork/webfonts";
-
-// grid
-@import "groundwork/grid";
+// groundwork base -  reset, globals, grid, helpers, animations (required)
+@import "groundwork/base/all";
 
 // groundwork components
-@import "groundwork/typography";
-@import "groundwork/buttons";
-@import "groundwork/navigation";
-@import "groundwork/font-awesome";
+@import "groundwork/type/all"; // typography, font awesome, web fonts
+@import "groundwork/nav/all"; // buttons, navigation, tabs
 
-// responsive adjustments
-@import "groundwork/responsive";
+// groundwork responsive adjustments
+@import "groundwork/responsive/all"; // responsive navigation, tabs
 
 // ssi-rest variables & mixins
 @import "variables";

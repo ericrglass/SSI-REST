@@ -1,12 +1,14 @@
-// =============================================
-// Fallbacks for non-SVG support by Gary Hepting 
-//           Last Updated:2013-2-15
-// =============================================
+/* =============================================
+ *              No SVG Fallbacks
+ *           Last Updated:2013-2-15
+ * ===========================================*/
 
-// variables & mixins
-@import "variables";
-@import "mixins";
 
+// custom settings
+@import "settings";     // optional
+
+// core
+@import "core/all";         // required
 
 
 

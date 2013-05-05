@@ -1,0 +1,81 @@
+// ===================================
+//              Popovers
+// ===================================
+
+
+
+
+.popover {
+  display:none;
+}
+#popover {
+  position:absolute;
+  z-index:10;
+  background:$white;
+  color:$dk-gray;
+  padding:15px 18px;
+  border:1px solid $gray-2;
+  border-radius:10px;
+  @include drop-shadow(rgba(0,0,0,0.4), 24px, 0, 0);
+  min-width:200px;
+  max-width:640px;
+  .close {
+    position:absolute;
+    top:10px;
+    right:10px;
+    display:block;
+    width:17px;
+    height:17px;
+    line-height:16px;
+    padding:0;
+    text-align:center;
+    float:right;
+    color:$white;
+    background:$bright-blue;
+    text-decoration:none;
+    font-size:12px;
+    @include rounded(2px);
+  }
+  &:after {
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+  }
+  &.top.right:after {
+    top:auto;
+    right:20px;
+    bottom:-10px;
+    left:auto;
+    border-top:10px solid $white;
+    border-right:10px solid transparent;
+    border-left:10px solid transparent;
+  }
+  &.top.left:after {
+    top:auto;
+    right:auto;
+    bottom:-10px;
+    left:20px;
+    border-top:10px solid $white;
+    border-right:10px solid transparent;
+    border-left:10px solid transparent;
+  }
+  &.bottom.right:after {
+    top:-10px;
+    right:20px;
+    bottom:auto;
+    left:auto;
+    border-right:10px solid transparent;
+    border-bottom:10px solid $white;
+    border-left:10px solid transparent;
+  }
+  &.bottom.left:after {
+    top:-10px;
+    right:auto;
+    bottom:auto;
+    left:20px;
+    border-right:10px solid transparent;
+    border-bottom:10px solid $white;
+    border-left:10px solid transparent;
+  }
+}
