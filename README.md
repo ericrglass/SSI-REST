@@ -40,9 +40,23 @@ Minimal Setup
 * Tables: CUSTOMER, DISCOUNT_CODE, MANUFACTURER, MICRO_MARKET, PRODUCT_CODE, PRODUCT, and PURCHASE_ORDER
 * If you need to create and load these tables with data the scripts are in the folder: docs/sample-db
     * NetBeans Grab Structures are provided and can be used with the [Database Explorer UI's Recreate Table feature](https://db.netbeans.org/uispecs/DBModuleUISpec.html#2.4.2.2)
-    * DDL SQL files are provided to be used with any database client like the Eclipse Database Development perspective
-    * There are (del) delimited files produced with the [Derby ij utility](http://db.apache.org/derby/papers/DerbyTut/ij_intro.html) that can be used for importing
+    * DDL SQL files (.sql) are provided to be used with any database client like the Eclipse Database Development perspective
+    * There are (.del) delimited files produced with the [Derby ij utility](http://db.apache.org/derby/papers/DerbyTut/ij_intro.html) that can be used for importing
         * Use the instructions from [Example importing all data from a delimited file](http://db.apache.org/derby/docs/10.4/tools/rtoolsimport91458.html) with these files
+
+Additional Setup
+----------------
+
+* JBoss AS 7.1
+* A database server, [MySQL](http://www.mysql.com/) is recommended
+* The following resources are available for running either GlassFish 3.1.2 or JBoss AS 7.1 with a database server
+   * For the MySQL database server in the docs/sample-db folder there is the file MySQLDump.sql that can be used to do a full restore of the ssi_rest database with all of the tables loaded with example data
+   * For other database servers in the docs/sample-db folder there are the DDL SQL files (.sql) and the data in comma seperated values files (.csv) for each of the tables
+   * The persistence.xml file in the folder src/main/resources/META-INF might need to be updated to reflect the database and JEE6 server being utilized
+      * Comment out the \<provider\> and \<jta-data-source\> elements not needed and uncomment the ones needed
+      * For example with JBoss AS 7.1 with a database server setup with the ssi_rest database, then you want the following to be uncommented
+         * \<provider\>org.hibernate.ejb.HibernatePersistence\</provider\>
+         * \<jta-data-source\>java:jboss/ssi_restDS\</jta-data-source\>
 
 TODO
 ----
