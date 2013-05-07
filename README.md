@@ -25,6 +25,7 @@ This Java Enterprise Edition 6 Web application has the following features
 * JEE6 Web Profile's [EJB 3.1 Lite](http://www.oracle.com/technetwork/articles/javaee/javaee6overview-part3-139660.html#ejblite) is used as Stateles Session [Enterprise JavaBeans](http://en.wikipedia.org/wiki/Enterprise_JavaBeans) integrated with JAX-RS 
 * [Java Persistence API (JPA)](http://en.wikipedia.org/wiki/Java_Persistence_API) 2.1 Entity Java objects with [JavaScript Object Notation (JSON)](http://en.wikipedia.org/wiki/JSON) annotations
 * [Contexts and Dependency Injection (CDI)](http://docs.oracle.com/javaee/6/tutorial/doc/giwhb.html) 1.0 is used to inject services and gain access to the JPA Entities
+* Server side service delegation prior to SSI processing based on the [Delegation Design Pattern](http://en.wikipedia.org/wiki/Delegation_pattern)
 * Demonstrate single code maintenance Web pages
 * Incorporate search, edit, add, and delete Web pages for hierarchical data
 * Production mode features for browser performance
