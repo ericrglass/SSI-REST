@@ -3,7 +3,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
  <display-name>SSI-REST</display-name>
  <distributable/>
- <module-name>SSI-REST</module-name>
+ <module-name>ssi-rest</module-name>
  <filter>
   <filter-name>GzipFilter</filter-name>
   <filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>
@@ -22,7 +22,11 @@
  </filter-mapping>
  <servlet>
   <servlet-name>SSIServlet</servlet-name>
-  <servlet-class>com.github.ssi_rest.servlet.HtmlCompressorSSIServlet</servlet-class>
+  <servlet-class>com.github.ssi_rest.servlet.SsiRestServlet</servlet-class>
+  <init-param>
+   <param-name>com.github.ssi_rest.service.DelegatorJNDIName</param-name>
+   <param-value>java:global/ssi-rest/SsiRestServiceDelegator</param-value>
+  </init-param>
   <init-param>
    <param-name>expires</param-name>
    <param-value>1</param-value>

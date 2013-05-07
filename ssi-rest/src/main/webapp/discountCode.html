@@ -218,34 +218,23 @@ table.dataTable {
 <script src="js/plugins/jquery.serializeJSON-1.0.1.min.js"></script>
 <!--#include file="includes/scriptBeforeBodyEnd.html" -->
 <script>
-  $.ajax({
-	  type: 'GET',
-	  url: 'resource/discountCode',
-	  cache: false,
-	  dataType: 'json'
-	}).done(function(data) {
-    var discountCodeData = [];
-    if (data && (data != null) && $.isArray(data)) {
-    	discountCodeData = data;
-    	console.log(JSON.stringify(data));
-    }
-	  $('#discountCodeTable').removeClass('hide').dataTable({
-	    'aaData': discountCodeData,
-	    'bAutoWidth': false,
-	    'iDisplayLength': 25,
-	    'aLengthMenu': [1, 5, 10, 25, 50, 100, 250],
-	    'sPaginationType': 'full_numbers',
-	    'sDom': '<"dataTables-row"<"dataTables-row-left"l><"dataTables-row-right"f>r>t<"dataTables-row"<"dataTables-row-left"i><"dataTables-row-right"p>>',
-	    'aoColumns': [
-	      {'mData': 'discountCode', 'sClass': 'three fifths'},
-	      {'mData': 'rate', 'sClass': 'one fifth'},
-	      {'mData': function(data, type, value) {
-	        return '&nbsp;<a href="#" title="Select to edit" onclick="return false;">Edit</a>&nbsp; '
-	          + '&nbsp;<a href="#" title="Select to delete" onclick="return false;">Delete</a>&nbsp;';
-	      }, 'bSortable': false, 'sClass': 'one fifth'}
-	    ]
-	  });
-	});
+  <!--#echo var="DISCOUNT_CODE_LIST_JSON" encoding="none" -->
+  $('#discountCodeTable').removeClass('hide').dataTable({
+    'aaData': discountCodeListData,
+    'bAutoWidth': false,
+    'iDisplayLength': 25,
+    'aLengthMenu': [1, 5, 10, 25, 50, 100, 250],
+    'sPaginationType': 'full_numbers',
+    'sDom': '<"dataTables-row"<"dataTables-row-left"l><"dataTables-row-right"f>r>t<"dataTables-row"<"dataTables-row-left"i><"dataTables-row-right"p>>',
+    'aoColumns': [
+      {'mData': 'discountCode', 'sClass': 'three fifths'},
+      {'mData': 'rate', 'sClass': 'one fifth'},
+      {'mData': function(data, type, value) {
+        return '&nbsp;<a href="#" title="Select to edit" onclick="return false;">Edit</a>&nbsp; '
+          + '&nbsp;<a href="#" title="Select to delete" onclick="return false;">Delete</a>&nbsp;';
+      }, 'bSortable': false, 'sClass': 'one fifth'}
+    ]
+  });
 </script>
 </body>
 </html>
