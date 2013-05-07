@@ -5631,19 +5631,24 @@ legend + .control-group {
 
 table.dataTable thead th.sorting {
   cursor: pointer;
-  *cursor: hand; }
+  *cursor: hand;
+  background: url("../images/sort_both.png") no-repeat center right; }
 table.dataTable thead th.sorting_asc {
   cursor: pointer;
-  *cursor: hand; }
+  *cursor: hand;
+  background: url("../images/sort_asc.png") no-repeat center right; }
 table.dataTable thead th.sorting_desc {
   cursor: pointer;
-  *cursor: hand; }
+  *cursor: hand;
+  background: url("../images/sort_desc.png") no-repeat center right; }
 table.dataTable thead th.sorting_asc_disabled {
   cursor: pointer;
-  *cursor: hand; }
+  *cursor: hand;
+  background: url("../images/sort_asc_disabled.png") no-repeat center right; }
 table.dataTable thead th.sorting_desc_disabled {
   cursor: pointer;
-  *cursor: hand; }
+  *cursor: hand;
+  background: url("../images/sort_desc_disabled.png") no-repeat center right; }
 
 .breadcrumbs li.crumb-active a {
   text-decoration: none; }
@@ -5652,7 +5657,7 @@ table.dataTable thead th.sorting_desc_disabled {
   color: gray; }
 
 thead tr th, thead tr td {
-  background: #1dabb8;
+  background-color: #1dabb8 !important;
   color: white; }
 
 tfoot tr td {
