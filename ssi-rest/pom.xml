@@ -7,13 +7,25 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ssi-rest</name>
 	<description>ssi-rest Web Application</description>
+	<repositories>
+		<repository>
+			<id>EclipseLink</id>
+			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+		</repository>
+	</repositories>
 	<dependencies>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>6.0</version>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.jpa</artifactId>
+			<version>2.4.0</version>
       <scope>provided</scope>
-    </dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -32,18 +44,18 @@
 			<version>2.0.4</version>
 			<scope>compile</scope>
 		</dependency>
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-core-asl</artifactId>
-      <version>1.9.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.2</version>
-      <scope>compile</scope>
-    </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.2</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>

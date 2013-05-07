@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.ws.rs.WebApplicationException;
@@ -85,7 +87,10 @@ public class JsonMessageProvider implements MessageBodyReader<Object>,
 	private boolean isJsonValid(Class<?> type, MediaType mediaType) {
 		boolean hasAnnotation = false;
 
-		if ((type.getAnnotations() != null)
+		if (List.class.isAssignableFrom(type)
+				|| Map.class.isAssignableFrom(type)) {
+			hasAnnotation = true;
+		} else if ((type.getAnnotations() != null)
 				&& (type.getAnnotations().length > 0)) {
 			for (Annotation annotation : type.getAnnotations()) {
 				if (annotation.annotationType().toString().toLowerCase()
