@@ -39,7 +39,7 @@ import org.apache.tomcat.util.http.HttpMessages;
  * @author Paul Speed
  * @author Dan Sandberg
  * @author David Becker
- * @version $Id: SSIMediator.java 943260 2010-05-11 20:05:15Z markt $
+ * @version $Revision: 1473 $, $Date: 2010-05-17 19:46:58 +0200 (Mon, 17 May 2010) $
  */
 public class SSIMediator {
     protected final static String DEFAULT_CONFIG_ERR_MSG = "[an error occurred while processing this directive]";
@@ -128,8 +128,8 @@ public class SSIMediator {
     }
 
 
-    public Collection<String> getVariableNames() {
-        Set<String> variableNames = new HashSet<String>();
+    public Collection getVariableNames() {
+        Set variableNames = new HashSet();
         //These built-in variables are supplied by the mediator ( if not
         // over-written by
         // the user ) and always exist
@@ -138,9 +138,9 @@ public class SSIMediator {
         variableNames.add("LAST_MODIFIED");
         ssiExternalResolver.addVariableNames(variableNames);
         //Remove any variables that are reserved by this class
-        Iterator<String> iter = variableNames.iterator();
+        Iterator iter = variableNames.iterator();
         while (iter.hasNext()) {
-            String name = iter.next();
+            String name = (String)iter.next();
             if (isNameReserved(name)) {
                 iter.remove();
             }
@@ -192,7 +192,7 @@ public class SSIMediator {
             variableValue = ssiExternalResolver.getVariableValue(variableName);
             if (variableValue == null) {
                 variableName = variableName.toUpperCase(Locale.ENGLISH);
-                variableValue = ssiExternalResolver
+                variableValue = (String)ssiExternalResolver
                         .getVariableValue(className + "." + variableName);
             }
             if (variableValue != null) {

@@ -32,15 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.apache.tomcat.util.ExceptionUtils;
-
 /**
  * A HttpServletResponseWrapper, used from
  * <code>SSIServletExternalResolver</code>
  *
  * @author Bip Thelin
  * @author David Becker
- * @version $Id: ResponseIncludeWrapper.java 943260 2010-05-11 20:05:15Z markt $
+ * @version $Revision: 1473 $, $Date: 2010-05-17 19:46:58 +0200 (Mon, 17 May 2010) $
  */
 public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
     /**
@@ -79,7 +77,7 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @param captureServletOutputStream The ServletOutputStream to use
      */
     public ResponseIncludeWrapper(ServletContext context,
-    		HttpServletRequest request, HttpServletResponse response,
+            HttpServletRequest request, HttpServletResponse response,
            ServletOutputStream captureServletOutputStream) {
         super(response);
         this.context = context;
@@ -111,7 +109,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @exception java.io.IOException
      *                if the outputstream already been called
      */
-    @Override
     public PrintWriter getWriter() throws java.io.IOException {
         if (servletOutputStream == null) {
             if (printWriter == null) {
@@ -134,7 +131,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @exception java.io.IOException
      *                if the printwriter already been called
      */
-    @Override
     public ServletOutputStream getOutputStream() throws java.io.IOException {
         if (printWriter == null) {
             if (servletOutputStream == null) {
@@ -180,7 +176,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @return the content type of the resource referenced by this
      *   <code>ResponseIncludeWrapper</code>, or <code>null</code> if not known.
      */
-    @Override
     public String getContentType() {
         if (contentType == null) {
             String url = request.getRequestURI();
@@ -191,7 +186,7 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
             }
             else
             {
-            	// return a safe value
+                // return a safe value
                setContentType("application/x-octet-stream");
             }
         }
@@ -203,7 +198,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      *
      * @param mime a mime type
      */
-    @Override
     public void setContentType(String mime) {
         contentType = mime;
         if (contentType != null) {
@@ -212,7 +206,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
     }
 
 
-    @Override
     public void addDateHeader(String name, long value) {
         super.addDateHeader(name, value);
         String lname = name.toLowerCase(Locale.ENGLISH);
@@ -221,7 +214,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    @Override
     public void addHeader(String name, String value) {
         super.addHeader(name, value);
         String lname = name.toLowerCase(Locale.ENGLISH);
@@ -230,15 +222,12 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
                 synchronized(RFC1123_FORMAT) {
                     lastModified = RFC1123_FORMAT.parse(value).getTime();
                 }
-            } catch (Throwable ignore) {
-                ExceptionUtils.handleThrowable(ignore);
-            }
+            } catch (Throwable ignore) { }
         } else if (lname.equals(CONTENT_TYPE)) {
             contentType = value;
         }
     }
 
-    @Override
     public void setDateHeader(String name, long value) {
         super.setDateHeader(name, value);
         String lname = name.toLowerCase(Locale.ENGLISH);
@@ -247,7 +236,6 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    @Override
     public void setHeader(String name, String value) {
         super.setHeader(name, value);
         String lname = name.toLowerCase(Locale.ENGLISH);
@@ -256,9 +244,7 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
                 synchronized(RFC1123_FORMAT) {
                     lastModified = RFC1123_FORMAT.parse(value).getTime();
                 }
-            } catch (Throwable ignore) {
-                ExceptionUtils.handleThrowable(ignore);
-            }
+            } catch (Throwable ignore) { }
         }
         else if (lname.equals(CONTENT_TYPE))
         {

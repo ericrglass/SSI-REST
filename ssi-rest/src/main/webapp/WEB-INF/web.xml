@@ -24,8 +24,20 @@
   <servlet-name>SSIServlet</servlet-name>
   <servlet-class>com.github.ssi_rest.servlet.SsiRestServlet</servlet-class>
   <init-param>
-   <param-name>com.github.ssi_rest.service.DelegatorJNDIName</param-name>
-   <param-value>java:global/ssi-rest/SsiRestServiceDelegator</param-value>
+    <param-name>com.github.ssi_rest.service.DelegatorJNDIName</param-name>
+    <param-value>java:global/ssi-rest/SsiRestServiceDelegator</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_rest.servlet.HTML_COMPRESSOR</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_rest.servlet.COMPRESS_CSS</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_rest.servlet.COMPRESS_JAVASCRIPT</param-name>
+    <param-value>true</param-value>
   </init-param>
   <init-param>
    <param-name>expires</param-name>

@@ -6,11 +6,5 @@
 			<module name="org.codehaus.jackson.jackson-jaxrs" export="true" />
 			<module name="org.codehaus.jackson.jackson-mapper-asl" export="true" />
 		</dependencies>
-		<exclusions>
-			<module name="org.apache.catalina" />
-			<module name="org.apache.coyote" />
-			<module name="org.apache.juli.logging" />
-			<module name="org.apache.tomcat" />
-		</exclusions>
 	</deployment>
 </jboss-deployment-structure>

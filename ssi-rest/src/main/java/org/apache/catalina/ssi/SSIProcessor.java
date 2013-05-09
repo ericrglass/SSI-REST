@@ -33,7 +33,7 @@ import org.apache.catalina.util.IOTools;
  *
  * @author Dan Sandberg
  * @author David Becker
- * @version $Id: SSIProcessor.java 943260 2010-05-11 20:05:15Z markt $
+ * @version $Id: SSIProcessor.java 1534 2010-08-18 12:40:08Z remy.maucherat@jboss.com $
  */
 public class SSIProcessor {
     /** The start pattern */
@@ -45,11 +45,14 @@ public class SSIProcessor {
     protected HashMap<String,SSICommand> commands =
         new HashMap<String,SSICommand>();
     protected int debug;
+    protected final boolean allowExec;
 
 
-    public SSIProcessor(SSIExternalResolver ssiExternalResolver, int debug) {
+    public SSIProcessor(SSIExternalResolver ssiExternalResolver, int debug,
+            boolean allowExec) {
         this.ssiExternalResolver = ssiExternalResolver;
         this.debug = debug;
+        this.allowExec = allowExec;
         addBuiltinCommands();
     }
 
@@ -57,7 +60,9 @@ public class SSIProcessor {
     protected void addBuiltinCommands() {
         addCommand("config", new SSIConfig());
         addCommand("echo", new SSIEcho());
-        addCommand("exec", new SSIExec());
+        if (allowExec) {
+            addCommand("exec", new SSIExec());
+        }
         addCommand("include", new SSIInclude());
         addCommand("flastmod", new SSIFlastmod());
         addCommand("fsize", new SSIFsize());

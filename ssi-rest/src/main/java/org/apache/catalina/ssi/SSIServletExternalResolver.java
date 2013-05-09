@@ -33,9 +33,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// eric - removed, should never be referenced
+// ssi-rest - erg - removed, should never be referenced
 //import org.apache.catalina.connector.Request;
-import org.apache.catalina.util.RequestUtil;
 import org.apache.coyote.Constants;
 
 /**
@@ -43,7 +42,7 @@ import org.apache.coyote.Constants;
  *
  * @author Dan Sandberg
  * @author David Becker
- * @version $Id: SSIServletExternalResolver.java 943260 2010-05-11 20:05:15Z markt $
+ * @version $Revision: 1473 $, $Date: 2010-05-17 19:46:58 +0200 (Mon, 17 May 2010) $
  */
 public class SSIServletExternalResolver implements SSIExternalResolver {
     protected final String VARIABLE_NAMES[] = {"AUTH_TYPE", "CONTENT_LENGTH",
@@ -87,7 +86,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public void addVariableNames(Collection<String> variableNames) {
+    public void addVariableNames(Collection variableNames) {
         for (int i = 0; i < VARIABLE_NAMES.length; i++) {
             String variableName = VARIABLE_NAMES[i];
             String variableValue = getVariableValue(variableName);
@@ -95,9 +94,9 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
                 variableNames.add(variableName);
             }
         }
-        Enumeration<String> e = req.getAttributeNames();
+        Enumeration e = req.getAttributeNames();
         while (e.hasMoreElements()) {
-            String name = e.nextElement();
+            String name = (String)e.nextElement();
             if (!isNameReserved(name)) {
                 variableNames.add(name);
             }
@@ -110,9 +109,9 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
         if (!isNameReserved(targetName)) {
             object = req.getAttribute(targetName);
             if (object == null) {
-                Enumeration<String> e = req.getAttributeNames();
+                Enumeration e = req.getAttributeNames();
                 while (e.hasMoreElements()) {
-                    String name = e.nextElement();
+                    String name = (String)e.nextElement();
                     if (targetName.equalsIgnoreCase(name)
                             && !isNameReserved(name)) {
                         object = req.getAttribute(name);
@@ -159,6 +158,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
         if (nameParts.length == 1) {
             if (nameParts[0].equals("PATH")) {
                 requiredParts = 1;
+                retVal = null; // Not implemented
             }
         }
         else if (nameParts[0].equals("AUTH")) {
@@ -196,14 +196,14 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
                     accept = "Accept-Language";
                 }
                 if (accept != null) {
-                    Enumeration<String> acceptHeaders = req.getHeaders(accept);
+                    Enumeration acceptHeaders = req.getHeaders(accept);
                     if (acceptHeaders != null)
                         if (acceptHeaders.hasMoreElements()) {
                             StringBuilder rv = new StringBuilder(
-                                    acceptHeaders.nextElement());
+                                    (String) acceptHeaders.nextElement());
                             while (acceptHeaders.hasMoreElements()) {
                                 rv.append(", ");
-                                rv.append(acceptHeaders.nextElement());
+                                rv.append((String) acceptHeaders.nextElement());
                             }
                         retVal = rv.toString();
                     }
@@ -244,12 +244,13 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
                         String queryStringEncoding =
                             Constants.DEFAULT_CHARACTER_ENCODING;
 
-                        // eric - Removed, should never be referenced
+                     // ssi-rest - erg - removed, should never be referenced
 //                        String uriEncoding = null;
 //                        boolean useBodyEncodingForURI = false;
 
                         // Get encoding settings from request / connector if
                         // possible
+                        // ssi-rest - erg - removed, should never be referenced
 //                        String requestEncoding = req.getCharacterEncoding();
 //                        if (req instanceof Request) {
 //                            uriEncoding =
@@ -259,6 +260,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
 //                        }
 
                         // If valid, apply settings from request / connector
+                     // ssi-rest - erg - removed, should never be referenced
 //                        if (uriEncoding != null) {
 //                            queryStringEncoding = uriEncoding;
 //                        } else if(useBodyEncodingForURI) {
@@ -282,7 +284,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
             } else if (nameParts[1].equals("HOST")) {
                 retVal = req.getRemoteHost();
             } else if (nameParts[1].equals("IDENT")) {
-                // Not implemented
+                retVal = null; // Not implemented
             } else if (nameParts[1].equals("PORT")) {
                 retVal = Integer.toString( req.getRemotePort());
             } else if (nameParts[1].equals("USER")) {
@@ -351,7 +353,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
         String retVal = null;
         int lastSlash = servletPath.lastIndexOf('/');
         if (lastSlash >= 0) {
-            //cut off file name
+            //cut off file namee
             retVal = servletPath.substring(0, lastSlash + 1);
         }
         return retVal;
@@ -375,7 +377,7 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
                     + pathWithoutContext);
         }
         String fullPath = prefix + path;
-        String retVal = RequestUtil.normalize(fullPath);
+        String retVal = SSIServletRequestUtil.normalize(fullPath);
         if (retVal == null) {
             throw new IOException("Normalization yielded null on path: "
                     + fullPath);
@@ -407,34 +409,34 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
         if (!virtualPath.startsWith("/") && !virtualPath.startsWith("\\")) {
             return new ServletContextAndPath(context,
                     getAbsolutePath(virtualPath));
-        }
-
-        String normalized = RequestUtil.normalize(virtualPath);
-        if (isVirtualWebappRelative) {
-            return new ServletContextAndPath(context, normalized);
-        }
-
-        ServletContext normContext = context.getContext(normalized);
-        if (normContext == null) {
-            throw new IOException("Couldn't get context for path: "
-                    + normalized);
-        }
-        //If it's the root context, then there is no context element
-        // to remove,
-        // ie:
-        // '/file1.shtml' vs '/appName1/file1.shtml'
-        if (!isRootContext(normContext)) {
-            String noContext = getPathWithoutContext(
-                    normContext.getContextPath(), normalized);
-            if (noContext == null) {
-                throw new IOException(
-                        "Couldn't remove context from path: "
-                                + normalized);
+        } else {
+            String normalized = SSIServletRequestUtil.normalize(virtualPath);
+            if (isVirtualWebappRelative) {
+                return new ServletContextAndPath(context, normalized);
+            } else {
+                ServletContext normContext = context.getContext(normalized);
+                if (normContext == null) {
+                    throw new IOException("Couldn't get context for path: "
+                            + normalized);
+                }
+                //If it's the root context, then there is no context element
+                // to remove,
+                // ie:
+                // '/file1.shtml' vs '/appName1/file1.shtml'
+                if (!isRootContext(normContext)) {
+                    String noContext = getPathWithoutContext(
+                            normContext.getContextPath(), normalized);
+                    if (noContext == null) {
+                        throw new IOException(
+                                "Couldn't remove context from path: "
+                                        + normalized);
+                    }
+                    return new ServletContextAndPath(normContext, noContext);
+                } else {
+                    return new ServletContextAndPath(normContext, normalized);
+                }
             }
-            return new ServletContextAndPath(normContext, noContext);
         }
-
-        return new ServletContextAndPath(normContext, normalized);
     }
 
 
