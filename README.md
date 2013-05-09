@@ -29,7 +29,7 @@ This Java Enterprise Edition 6 Web application has the following features
 * Demonstrate single code maintenance Web pages
 * Incorporate search, edit, add, and delete Web pages for hierarchical data
 * Production mode features for browser performance
-    * HTML compressing with in-line CSS and JavaScript minification
+    * HTML compressing with in-line CSS and JavaScript minification utilizing [htmlcompressor](https://code.google.com/p/htmlcompressor/) along with [YUI Compressor](http://yui.github.io/yuicompressor/)
     * Asset or resource combining to minimize browser request
 
 Minimal Setup
@@ -53,11 +53,15 @@ Additional Setup
 * The following resources are available for running either GlassFish 3.1.2 or JBoss AS 7.1 with a database server
    * For the MySQL database server in the docs/sample-db folder there is the file MySQLDump.sql that can be used to do a full restore of the ssi_rest database with all of the tables loaded with example data
    * For other database servers in the docs/sample-db folder there are the DDL SQL files (.sql) and the data in comma seperated values files (.csv) for each of the tables
-   * The persistence.xml file in the folder src/main/resources/META-INF might need to be updated to reflect the database and JEE6 server being utilized
-      * Comment out the \<provider\> and \<jta-data-source\> elements not needed and uncomment the ones needed
-      * For example with JBoss AS 7.1 with a database server setup with the ssi_rest database, then you want the following to be uncommented
+   * The persistence.xml file in the folder src/main/resources/META-INF probably will need to be updated to reflect the database and JEE6 server being utilized
+      * Comment out under the particular (Server with Database) comment line the \<provider\>, the \<jta-data-source\>, and any additional elements not needed
+      * Then uncomment the elements under the particular (Server with Database) comment line that is needed
+      * For example with (\<!-- JBoss 7.1.x with Hibernate - ssi_restDS DataSource --\>), then the following needs to be uncommented
          * \<provider\>org.hibernate.ejb.HibernatePersistence\</provider\>
          * \<jta-data-source\>java:jboss/ssi_restDS\</jta-data-source\>
+         * \<class\>com.github.ssi_rest.model.Customer\</class\>
+         * ...
+         * \<exclude-unlisted-classes\>true\</exclude-unlisted-classes\>
 * Here is some information about setting up a datasource in JBoss AS 7.1
    * [JBoss AS 7.1 DataSource configuration](https://docs.jboss.org/author/display/AS71/DataSource+configuration)
    * [vkslabs.com - Adding MySQL data source to JBoss 7.X](http://vkslabs.com/adding-mysql-data-store-to-jboss-7-x/)
@@ -68,8 +72,8 @@ Additional Setup
 TODO
 ----
 
-* A code maintenance Web page
-* Utilize JSON in rendering Web pages
+* A code maintenance Web page (Partial)
+* Utilize JSON in rendering Web pages (Code Maintenance DataTable is done)
 * A search with results Web page
 * A CRUD hierarchical data Web page
 * Production mode asset combining
