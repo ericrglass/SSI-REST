@@ -48,15 +48,18 @@ public class SsiRestExceptionMapper implements
 			}
 			String msg = "HTTP status code (" + exc.getResponse().getStatus()
 					+ ") for URI (" + request.getRequestURI()
-					+ ") with Entity (" + exc.getResponse().getEntity()
-					+ ") and message: " + statusMessage;
+					+ ") and content type (" + request.getContentType()
+					+ "); with Media Data (" + exc.getResponse().getMetadata()
+					+ "), Entity (" + exc.getResponse().getEntity()
+					+ "), and message: " + statusMessage;
 			SsiRestLogger.LOGGER.log(Level.SEVERE, msg, exc);
 			URI requestUri = null;
 			try {
 				requestUri = new URI(request.getRequestURI());
 			} catch (URISyntaxException e) {
 			}
-			return Response.ok().entity(msg).location(requestUri).build();
+			return Response.serverError().entity(msg).location(requestUri)
+					.build();
 		}
 
 		SsiRestLogger.LOGGER.log(Level.SEVERE, "The mapping rule for the URI ("
