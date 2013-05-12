@@ -55,7 +55,7 @@
 <!--#include file="includes/scriptBeforeBodyEnd.html" -->
 <script>
 var lastColumnHTML = $('#discountCodeTableBodyLastColumn').html();
-<!--#echo var="DISCOUNT_CODE_LIST_JSON" encoding="none" -->
+var discountCodeListData = <!--#echo var="DISCOUNT_CODE_LIST_JSON" encoding="none" -->;
 $('#discountCodeTable').removeClass('hide').dataTable({
   'aaData': discountCodeListData,
   'bAutoWidth': false,

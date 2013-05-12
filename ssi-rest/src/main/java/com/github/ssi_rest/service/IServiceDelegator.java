@@ -10,6 +10,6 @@ public interface IServiceDelegator {
 	public static final String QUERY_PARAM_ACTION = "action";
 
 	public void processRequest(HttpServletRequest req, String service,
-			String action);
+			String action, boolean debug);
 
 }

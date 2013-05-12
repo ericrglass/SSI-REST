@@ -50,6 +50,11 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			// for HTML compressor force buffered to be true
 			buffered = true;
 		}
+
+		if (debug > 0) {
+			log("SsiRestServlet.init() started with service delegator JNDI name '"
+					+ serviceDelegatorJNDIName + "'");
+		}
 	}
 
 	@Override
@@ -73,11 +78,20 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			return html;
 		}
 
+		if (debug > 0) {
+			log("HTML compressing the resource '" + req.getServletPath() + "'");
+		}
+
 		req.removeAttribute(REQ_ATTR_INITIAL_REQUEST_STRING);
 		HtmlCompressor compressor = new HtmlCompressor();
 		int bypassCSS = html.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_CSS);
 
 		if (compressCSS && (bypassCSS == -1)) {
+			if (debug > 0) {
+				log("CSS minification for resource '" + req.getServletPath()
+						+ "'");
+			}
+
 			compressor.setCompressCss(true);
 			// --line-break param for Yahoo YUI Compressor
 			compressor.setYuiCssLineBreak(-1);
@@ -86,6 +100,11 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		int bypassJS = html.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_JAVASCRIPT);
 
 		if (compressJS && (bypassJS == -1)) {
+			if (debug > 0) {
+				log("JavaScript minification for resource '"
+						+ req.getServletPath() + "'");
+			}
+
 			compressor.setCompressJavaScript(true);
 			// --disable-optimizations param for Yahoo YUI Compressor
 			compressor.setYuiJsDisableOptimizations(true);
@@ -97,7 +116,18 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			compressor.setYuiJsPreserveAllSemiColons(true);
 		}
 
-		return compressor.compress(html);
+		long beginTime = System.currentTimeMillis();
+		int sizeBefore = html.length();
+		html = compressor.compress(html);
+
+		if (debug > 0) {
+			log("Compression statics for resource '" + req.getServletPath()
+					+ "' - size before: " + sizeBefore + ", size after: "
+					+ html.length() + ", and total time: "
+					+ (System.currentTimeMillis() - beginTime) + "(ms)");
+		}
+
+		return html;
 	}
 
 	@Override
@@ -157,8 +187,17 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 
 				String action = req
 						.getParameter(IServiceDelegator.QUERY_PARAM_ACTION);
+
+				if (debug > 0) {
+					log("Calling service delegator '"
+							+ serviceDelegatorJNDIName.trim()
+							+ "' for resource '" + req.getServletPath()
+							+ "' with service name '" + service
+							+ "' and action '" + action + "'");
+				}
+
 				((IServiceDelegator) serviceDelegator).processRequest(req,
-						service, action);
+						service, action, (debug > 0));
 			} else if (namExc == null) {
 				SsiRestLogger.LOGGER
 						.log(Level.SEVERE,

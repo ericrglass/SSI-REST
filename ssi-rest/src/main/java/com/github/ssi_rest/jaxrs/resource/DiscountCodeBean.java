@@ -29,8 +29,6 @@ public class DiscountCodeBean extends AbstractJaxrs {
 
 	public static final String REQ_ATTR_LIST_JSON = "DISCOUNT_CODE_LIST_JSON";
 
-	public static final String JS_VAR_NAME_LIST_DATA = "discountCodeListData";
-
 	@PersistenceContext
 	protected EntityManager em;
 
@@ -43,29 +41,60 @@ public class DiscountCodeBean extends AbstractJaxrs {
 	}
 
 	public void processRequest(HttpServletRequest req, String action,
-			EntityManager em) {
+			EntityManager em, boolean debug) {
 		this.em = em;
 
 		if (action == null) {
-			String listJson = null;
-			ObjectMapper mapper = new ObjectMapper();
-
-			try {
-				listJson = mapper.writeValueAsString(getAllDiscountCodeList());
-			} catch (Exception e) {
-				listJson = null;
-				SsiRestLogger.LOGGER.log(Level.SEVERE, "", e);
-			}
-
-			if ((listJson == null) || (listJson.length() == 0)) {
-				listJson = "var " + JS_VAR_NAME_LIST_DATA + " = [];";
-			} else {
-				listJson = "var " + JS_VAR_NAME_LIST_DATA + " = " + listJson
-						+ ";";
-			}
-
-			req.setAttribute(REQ_ATTR_LIST_JSON, listJson);
+			defaultAction(req, debug);
+		} else if (debug) {
+			SsiRestLogger.LOGGER
+					.warning("Debug Message: DiscountCodeBean - "
+							+ "processRequest method was called with action '"
+							+ action
+							+ "', but does not have support for it; and the request resource '"
+							+ (((req == null) || (req.getServletPath() == null)) ? "N\\A"
+									: req.getServletPath()) + "'.");
 		}
+	}
+
+	private void defaultAction(HttpServletRequest req, boolean debug) {
+		if (req == null) {
+			SsiRestLogger.LOGGER.log(Level.SEVERE,
+					"DiscountCodeBean - processRequest (default action) "
+							+ "is missing the required HttpServletRequest.");
+			return;
+		}
+
+		String listJson = null;
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			listJson = mapper.writeValueAsString(getAllDiscountCodeList());
+		} catch (Exception e) {
+			listJson = null;
+			SsiRestLogger.LOGGER.log(
+					Level.SEVERE,
+					"DiscountCodeBean - processRequest (default "
+							+ "action) had the following exception: "
+							+ e.getMessage(), e);
+		}
+
+		if ((listJson == null) || (listJson.length() == 0)) {
+			listJson = "[]";
+		}
+
+		if (debug) {
+			SsiRestLogger.LOGGER.warning("Debug Message: DiscountCodeBean - "
+					+ "defaultAction method has placed the JSON '"
+					+ listJson
+					+ "' into the request as attribute '"
+					+ REQ_ATTR_LIST_JSON
+					+ "' for the request resource '"
+					+ ((req.getServletPath() == null) ? "N\\A" : req
+							.getServletPath()) + "'.");
+		}
+
+		req.setAttribute(REQ_ATTR_LIST_JSON, listJson);
 	}
 
 }
