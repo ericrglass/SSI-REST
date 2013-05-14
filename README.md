@@ -26,11 +26,15 @@ This Java Enterprise Edition 6 Web application has the following features
 * [Java Persistence API (JPA)](http://en.wikipedia.org/wiki/Java_Persistence_API) 2.1 Entity Java objects with [JavaScript Object Notation (JSON)](http://en.wikipedia.org/wiki/JSON) annotations
 * [Contexts and Dependency Injection (CDI)](http://docs.oracle.com/javaee/6/tutorial/doc/giwhb.html) 1.0 is used to inject services and gain access to the JPA Entities
 * Server side service delegation prior to SSI processing based on the [Delegation Design Pattern](http://en.wikipedia.org/wiki/Delegation_pattern)
+* [Internationalization (i18n)](http://en.wikipedia.org/wiki/Internationalization_and_localization) and localization feature
+   * Dynamically set the lang and dir attribute values to the browser's culture (language and country)
+   * Provide SSI variables to be used within the SSI processing of the HTML
+   * Allow the user to select the culture (language and country) to over-ride the browser
 * Demonstrate single code maintenance Web pages
 * Incorporate search, edit, add, and delete Web pages for hierarchical data
 * Production mode features for browser performance
-    * HTML compressing with in-line CSS and JavaScript minification utilizing [htmlcompressor](https://code.google.com/p/htmlcompressor/) along with [YUI Compressor](http://yui.github.io/yuicompressor/)
-    * Asset or resource combining to minimize browser request
+   * HTML compressing with in-line CSS and JavaScript minification utilizing [htmlcompressor](https://code.google.com/p/htmlcompressor/) along with [YUI Compressor](http://yui.github.io/yuicompressor/)
+   * Asset or resource combining to minimize browser request
 
 Minimal Setup
 -------------
@@ -74,6 +78,8 @@ TODO
 
 * A code maintenance Web page (Partial)
 * Utilize JSON in rendering Web pages (Code Maintenance DataTable is done)
+* Internationalization (i18n) and localization feature
+   * Allow the user to select the culture (language and country) to over-ride the browser
 * A search with results Web page
 * A CRUD hierarchical data Web page
 * Production mode asset combining
