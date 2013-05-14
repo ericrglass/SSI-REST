@@ -40,6 +40,10 @@
     <param-value>true</param-value>
   </init-param>
   <init-param>
+    <param-name>com.github.ssi_rest.servlet.ENABLE_I18N_FEATURE</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
    <param-name>expires</param-name>
    <param-value>1</param-value>
   </init-param>
