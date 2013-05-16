@@ -44,6 +44,23 @@
     <param-value>true</param-value>
   </init-param>
   <init-param>
+    <param-name>com.github.ssi_rest.servlet.ENABLE_I18N_RESOURCE_BUNDLE_JSON</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_PACKAGE</param-name>
+    <param-value>com.github.ssi_rest.i18n</param-value>
+  </init-param>
+  <!-- The following initialization parameters will default to the values shown -->
+<!--   <init-param> -->
+<!--     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SEPARATOR</param-name> -->
+<!--     <param-value>_</param-value> -->
+<!--   </init-param> -->
+<!--   <init-param> -->
+<!--     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SUFFIX</param-name> -->
+<!--     <param-value>.properties</param-value> -->
+<!--   </init-param> -->
+  <init-param>
    <param-name>expires</param-name>
    <param-value>1</param-value>
   </init-param>

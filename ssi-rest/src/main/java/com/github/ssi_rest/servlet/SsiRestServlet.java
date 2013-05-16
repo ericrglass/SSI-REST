@@ -23,10 +23,15 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 	public static final String INIT_PARAM_COMPRESS_CSS = "com.github.ssi_rest.servlet.COMPRESS_CSS";
 	public static final String INIT_PARAM_COMPRESS_JS = "com.github.ssi_rest.servlet.COMPRESS_JAVASCRIPT";
 	public static final String INIT_PARAM_ENABLE_I18N_FEATURE = "com.github.ssi_rest.servlet.ENABLE_I18N_FEATURE";
+	public static final String INIT_PARAM_ENABLE_I18N_RESOURCE_BUNDLE_JSON = "com.github.ssi_rest.servlet.ENABLE_I18N_RESOURCE_BUNDLE_JSON";
+	public static final String INIT_PARAM_I18N_RESOURCE_BUNDLE_PACKAGE = "com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_PACKAGE";
+	public static final String INIT_PARAM_I18N_RESOURCE_NAME_SEPARATOR = "com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SEPARATOR";
+	public static final String INIT_PARAM_I18N_RESOURCE_NAME_SUFFIX = "com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SUFFIX";
 
 	public static final String REQ_ATTR_INITIAL_REQUEST_STRING = "com.github.ssi_rest.servlet.INITIAL_REQUEST_STRING";
 	public static final String REQ_ATTR_I18N_LANG = "I18N_LANG";
 	public static final String REQ_ATTR_I18N_DIR = "I18N_DIR";
+	public static final String REQ_ATTR_I18N_JSON = "I18N_JSON";
 
 	public static final String HTML_COMMENT_BYPASS_COMPRESSING_HTML = "<!-- BYPASS_COMPRESSING_HTML -->";
 	public static final String HTML_COMMENT_BYPASS_COMPRESSING_CSS = "<!-- BYPASS_COMPRESSING_CSS -->";
@@ -39,6 +44,10 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 	private boolean compressCSS = false;
 	private boolean compressJS = false;
 	private boolean i18nFeature = false;
+	private boolean i18nResBundleJSON = false;
+	private String i18nResBundlePackage = null;
+	private String i18nResNameSeparator = null;
+	private String i18nResNameSuffix = null;
 
 	@Override
 	public void init() throws ServletException {
@@ -52,6 +61,11 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 				.parseBoolean(getInitParameter(INIT_PARAM_COMPRESS_JS));
 		i18nFeature = Boolean
 				.parseBoolean(getInitParameter(INIT_PARAM_ENABLE_I18N_FEATURE));
+		i18nResBundleJSON = Boolean
+				.parseBoolean(getInitParameter(INIT_PARAM_ENABLE_I18N_RESOURCE_BUNDLE_JSON));
+		i18nResBundlePackage = getInitParameter(INIT_PARAM_I18N_RESOURCE_BUNDLE_PACKAGE);
+		i18nResNameSeparator = getInitParameter(INIT_PARAM_I18N_RESOURCE_NAME_SEPARATOR);
+		i18nResNameSuffix = getInitParameter(INIT_PARAM_I18N_RESOURCE_NAME_SUFFIX);
 
 		if (htmlCompressor || i18nFeature) {
 			// For either the HTML compressor or the I18N feature, force
@@ -62,7 +76,26 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		if (debug > 0) {
 			log("SsiRestServlet.init() started with service delegator JNDI name '"
 					+ serviceDelegatorJNDIName + "'");
-			log("SsiRestServlet.init() the I18N feature has been enabled");
+			log("SsiRestServlet.init() the i18n feature: "
+					+ ((i18nFeature) ? "Has been enabled" : "Was not enabled"));
+			log("SsiRestServlet.init() the i18n resource bundle JSON feature: "
+					+ ((i18nResBundleJSON) ? "Has been enabled"
+							: "Was not enabled"));
+
+			if (i18nResBundleJSON) {
+				log("SsiRestServlet.init() the i18n resource bundle package '"
+						+ (((i18nResBundlePackage == null) || (i18nResBundlePackage
+								.trim().length() == 0)) ? "default"
+								: i18nResBundlePackage) + "'");
+				log("SsiRestServlet.init() the i18n resource name separator '"
+						+ (((i18nResNameSeparator == null) || (i18nResNameSeparator
+								.trim().length() == 0)) ? "_"
+								: i18nResNameSeparator) + "'");
+				log("SsiRestServlet.init() the i18n resource name suffix '"
+						+ (((i18nResNameSuffix == null) || (i18nResNameSuffix
+								.trim().length() == 0)) ? ".properties"
+								: i18nResNameSuffix) + "'");
+			}
 		}
 	}
 
@@ -111,12 +144,37 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 				&& (serviceDelegatorJNDIName.trim().length() > 0)) {
 			req.setAttribute(REQ_ATTR_INITIAL_REQUEST_STRING, req.toString());
 
+			String resouce = req.getServletPath();
+
+			if (resouce.startsWith("/")) {
+				if (resouce.length() > 1) {
+					resouce = resouce.substring(1);
+				} else {
+					resouce = "";
+				}
+			}
+
+			if (resouce.endsWith(".html")) {
+				if (resouce.length() > 5) {
+					resouce = resouce.substring(0, resouce.length() - 5);
+				} else {
+					resouce = "";
+				}
+			}
+
 			if (i18nFeature) {
 				req.setAttribute(REQ_ATTR_I18N_LANG, I18nUtils
-						.getLanguageHTMLLangAttributeValue(req.getLocale()));
+						.getCultureHTMLLangAttributeValue(req.getLocale()));
 				req.setAttribute(REQ_ATTR_I18N_DIR, I18nUtils
 						.getLanguageHTMLDirAttributeValue(req.getLocale()));
 
+				if (i18nResBundleJSON) {
+					req.setAttribute(REQ_ATTR_I18N_JSON, I18nUtils
+							.getCultureResourceBundleJSON(resouce,
+									req.getLocale(), i18nResBundlePackage,
+									i18nResNameSeparator, i18nResNameSuffix,
+									(debug > 0)));
+				}
 			}
 
 			Object serviceDelegator = null;
@@ -141,24 +199,7 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 						.getParameter(IServiceDelegator.QUERY_PARAM_SERVICE);
 
 				if ((service == null) || (service.trim().length() == 0)) {
-					service = req.getServletPath();
-
-					if (service.startsWith("/")) {
-						if (service.length() > 1) {
-							service = service.substring(1);
-						} else {
-							service = "";
-						}
-					}
-
-					if (service.endsWith(".html")) {
-						if (service.length() > 5) {
-							service = service
-									.substring(0, service.length() - 5);
-						} else {
-							service = "";
-						}
-					}
+					service = resouce;
 				}
 
 				String action = req
@@ -191,7 +232,7 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			log("Internationalizing the resource '"
 					+ req.getServletPath()
 					+ "' ; lang=\""
-					+ I18nUtils.getLanguageHTMLLangAttributeValue(req
+					+ I18nUtils.getCultureHTMLLangAttributeValue(req
 							.getLocale())
 					+ "\" ; dir=\""
 					+ I18nUtils.getLanguageHTMLDirAttributeValue(req
@@ -201,7 +242,7 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		StringBuilder i18nHtml = new StringBuilder(html);
 		boolean langAttrInserted = false;
 		String langAttr = "\""
-				+ I18nUtils.getLanguageHTMLLangAttributeValue(req.getLocale())
+				+ I18nUtils.getCultureHTMLLangAttributeValue(req.getLocale())
 				+ "\"";
 		boolean dirAttrInserted = false;
 		String dirAttr = "\""
