@@ -80,6 +80,7 @@ TODO
 * Utilize JSON in rendering Web pages (Code Maintenance DataTable is done)
 * Internationalization (i18n) and localization feature
    * Allow the user to select the culture (language and country) to over-ride the browser
+   * Add CSS3 styling for right to left languages
 * A search with results Web page
 * A CRUD hierarchical data Web page
 * Production mode asset combining
