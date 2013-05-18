@@ -17,6 +17,8 @@ import com.github.ssi_rest.SsiRestLogger;
 public class I18nUtils {
 
 	public static final String I18N_JSON_PROPERTY = "i18n";
+	public static final String I18N_JSON_KEY_LANG = "lang";
+	public static final String I18N_JSON_KEY_DIR = "dir";
 	public static final String I18N_JSON_EMPTY_MAP = "{\"" + I18N_JSON_PROPERTY
 			+ "\":{}}";
 	public static final Locale DEFAULT_LOCALE = Locale.US;
@@ -96,6 +98,59 @@ public class I18nUtils {
 
 		return getCultureHTMLLangAttributeValue(locale.getLanguage(),
 				locale.getCountry());
+	}
+
+	public static String getI18nJSONFromResourceBundleMap(
+			Map<String, String> resBundleMap, String language, String country,
+			boolean debug) {
+		String json = null;
+		Map<String, String> jsonMap = resBundleMap;
+
+		if (jsonMap == null) {
+			jsonMap = new HashMap<String, String>();
+		}
+
+		jsonMap.put(I18N_JSON_KEY_LANG,
+				getCultureHTMLLangAttributeValue(language, country));
+		jsonMap.put(I18N_JSON_KEY_DIR,
+				getLanguageHTMLDirAttributeValue(language));
+		I18nJSONBean i18nJSON = new I18nJSONBean();
+		i18nJSON.setI18n(jsonMap);
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			json = mapper.writeValueAsString(i18nJSON);
+		} catch (Exception e) {
+			json = null;
+			SsiRestLogger.LOGGER.log(
+					Level.SEVERE,
+					"I18nUtils - getI18nJSONFromResourceBundleMap "
+							+ "- had the following exception: "
+							+ e.getMessage(), e);
+		}
+
+		if ((json == null) || (json.length() == 0)) {
+			json = I18N_JSON_EMPTY_MAP;
+		}
+
+		if (debug) {
+			SsiRestLogger.LOGGER.warning("Debug Message: I18nUtils - "
+					+ "getI18nJSONFromResourceBundleMap - the i18n JSON: "
+					+ json);
+		}
+
+		return json;
+	}
+
+	public static String getI18nJSONFromResourceBundleMap(
+			Map<String, String> resBundleMap, Locale locale, boolean debug) {
+		if (locale == null) {
+			return getI18nJSONFromResourceBundleMap(resBundleMap, null, null,
+					debug);
+		}
+
+		return getI18nJSONFromResourceBundleMap(resBundleMap,
+				locale.getLanguage(), locale.getCountry(), debug);
 	}
 
 	public static Map<String, String> getCultureResourceBundleMap(
@@ -293,33 +348,10 @@ public class I18nUtils {
 			return I18N_JSON_EMPTY_MAP;
 		}
 
-		String json = null;
-		I18nJSONBean i18nJSON = new I18nJSONBean();
-		i18nJSON.setI18n(getCultureResourceBundleMap(resBaseName, language,
-				country, resPackage, resNameSeparator, resNameSuffix, debug));
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-			json = mapper.writeValueAsString(i18nJSON);
-		} catch (Exception e) {
-			json = null;
-			SsiRestLogger.LOGGER.log(
-					Level.SEVERE,
-					"I18nUtils - getCultureResourceBundleJSON "
-							+ "- had the following exception: "
-							+ e.getMessage(), e);
-		}
-
-		if ((json == null) || (json.length() == 0)) {
-			json = I18N_JSON_EMPTY_MAP;
-		}
-
-		if (debug) {
-			SsiRestLogger.LOGGER.warning("Debug Message: I18nUtils - "
-					+ "getCultureResourceBundleJSON - the i18n JSON: " + json);
-		}
-
-		return json;
+		return getI18nJSONFromResourceBundleMap(
+				getCultureResourceBundleMap(resBaseName, language, country,
+						resPackage, resNameSeparator, resNameSuffix, debug),
+				language, country, debug);
 	}
 
 	public static String getCultureResourceBundleJSON(String resBaseName,
@@ -327,7 +359,7 @@ public class I18nUtils {
 			String resNameSuffix, boolean debug) {
 		if ((resBaseName == null) || (resBaseName.trim().length() == 0)
 				|| (locale == null)) {
-			return "{}";
+			return I18N_JSON_EMPTY_MAP;
 		}
 
 		return getCultureResourceBundleJSON(resBaseName, locale.getLanguage(),
