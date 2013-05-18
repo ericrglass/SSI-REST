@@ -1,0 +1,42 @@
+<script>
+if (ko && (ko != null)) {
+  ko.bindingHandlers.i18nText = {
+    origText: null,
+    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      if ($ && ($ !== null)) {
+        this.origText = $(element).text();
+      } else {
+        if ((element.nodeType === 3) || (element.nodeType === 4)) {
+          this.origText = element.nodeValue;
+        }
+        if ((!this.origText || (this.origText === null)) && (element.childNodes.length > 0)
+          && ((element.childNodes[0].nodeType === 3) || (element.childNodes[0].nodeType === 4))) {
+          this.origText = element.childNodes[0].nodeValue;
+        }
+      }
+      if (!this.origText || (this.origText === null)) {
+        this.origText = '';
+      }
+      var textInit = ko.bindingHandlers.text.init;
+      if (textInit && (textInit !== null)) {
+        textInit(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext);
+      }
+    },
+    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var text = ko.utils.unwrapObservable(valueAccessor());
+      if (!text || (text === null) || (text.toString().length === 0)) {
+        text = this.origText;
+      }
+      if ($ && ($ !== null)) {
+        $(element).text(text);
+      } else {
+        var observable = ko.observable(text);
+        var textUpdate = ko.bindingHandlers.text.update;
+        if (textUpdate && (textUpdate !== null)) {
+          textUpdate(element, observable, allBindingsAccessor, viewModel, bindingContext);
+        }
+      }
+    }
+  };
+}
+</script>
