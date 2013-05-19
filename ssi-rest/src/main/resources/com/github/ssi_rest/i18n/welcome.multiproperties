@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MultiProperties xmlns="hu.skzs.multiproperties">
+    <Version>1.1</Version>
+    <Name>welcome</Name>
+    <Description>i18n properties for the welcome page</Description>
+    <Handler>Java Properties Handler</Handler>
+    <Columns>
+        <Key>
+            <Width>200</Width>
+        </Key>
+        <Column>
+            <Name>en</Name>
+            <Description>English</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ar</Name>
+            <Description>Arabic</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_ar.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>zh</Name>
+            <Description>Chinese</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_zh.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>fr</Name>
+            <Description>French</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_fr.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>de</Name>
+            <Description>German</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_de.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>iw</Name>
+            <Description>Hebrew</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_iw.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>hi</Name>
+            <Description>Hindi</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_hi.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>it</Name>
+            <Description>Italian</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_it.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ja</Name>
+            <Description>Japanese</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_ja.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ko</Name>
+            <Description>Korean</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_ko.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>es</Name>
+            <Description>Spanish</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/welcome_es.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+    </Columns>
+    <Records>
+        <Property>
+            <Name>title</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Welcome</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Accueil</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Benvenuto</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Bienvenida</Value>
+        </Property>
+        <Property>
+            <Name>articleCaption</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>The Server Side Includes with EJB and RESTful Services Web application is running.</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Le Server Side Includes avec EJB et l'application de services Web RESTful est en marche.</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Il Server Side Includes con EJB e applicazioni RESTful Web Services è in esecuzione.</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">El lado del servidor incluye con EJB y aplicaciones Web REST Services se está ejecutando.</Value>
+        </Property>
+        <Property>
+            <Name>codeMaintNavCaption</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Code Maintenance</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Gestion des Codes</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Manutenzione del Codice</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Mantenimiento de Código</Value>
+        </Property>
+        <Property>
+            <Name>navDiscountCode</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Discount Code</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Code de Réduction</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Codice Sconto</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Código de Descuento</Value>
+        </Property>
+        <Property>
+            <Name>stylingNavCaption</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Styling</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Mise en plis</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Styling</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Estilo</Value>
+        </Property>
+        <Property>
+            <Name>navKitchenSink</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>GroundworkCSS - Kitchen Sink</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">GroundworkCSS - évier de Cuisine</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">GroundworkCSS - Lavello</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">GroundworkCSS - Fregadero</Value>
+        </Property>
+        <Property>
+            <Name>appFeaturesCaption</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>This Java Enterprise Edition 6 Web application has the following features.</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Cette application Web Java Enterprise Edition 6 présente les caractéristiques suivantes.</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Questa applicazione Web Java Enterprise Edition 6 ha le seguenti caratteristiche.</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Esta edición de aplicaciones Web Java Enterprise 6 tiene las siguientes características.</Value>
+        </Property>
+        <Property>
+            <Name>appFeature1</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Clean semantic HTML5 mark-up</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Nettoyer le balisage sémantique HTML5</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Pulire semantici HTML5 mark-up</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Limpiar semántica HTML5 mark-up</Value>
+        </Property>
+        <Property>
+            <Name>appFeature2</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>CSS3 Responsive Web Design with mobile first</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">CSS3 Responsive Web Design avec le mobile premier</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">CSS3 Responsive Web Design con il cellulare prima</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">CSS3 Responsive Web Design con el móvil primero</Value>
+        </Property>
+        <Property>
+            <Name>appFeature3</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>, polyfill, and plug-in JavaScript libraries</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, polyfill, et plug-in bibliothèques JavaScript</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, polyfill, e plug-in librerie JavaScript</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, polyfill, y complemento en las bibliotecas de JavaScript</Value>
+        </Property>
+        <Property>
+            <Name>appFeature4a</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Utilizing</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Utilisant</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Utilizzando</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Utilizando</Value>
+        </Property>
+        <Property>
+            <Name>appFeature4b</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>, CSS3, SASS, and JavaScript frameworks that makes responsive design easy</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, CSS3, SASS, et JavaScript cadres qui rend la conception réactive facile</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, CSS3, SASS, e JavaScript framework che rende responsive design semplice</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">, CSS3, SASS y marcos de JavaScript que hace que el diseño de respuesta fácil</Value>
+        </Property>
+        <Property>
+            <Name>appFeature5</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Templates and reuse of HTML5 mark-up with Server side includes (SSI) using the</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Modèles et réutilisation de HTML5 mark-up avec inclusions côté serveur (SSI) en utilisant le</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Modelli e riutilizzo di HTML5 mark-up con Server side include (SSI) utilizzando il</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Plantillas y reutilización de HTML5 mark-up con el lado del servidor incluye (SSI) con el</Value>
+        </Property>
+        <Property>
+            <Name>appFeature6</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Dynamic content is provided with JSON generated on the server side using</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Le contenu dynamique est pourvu d'JSON générée sur le côté serveur en utilisant</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Il contenuto dinamico è dotato di JSON generato sul lato server utilizzando</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">El contenido dinámico se proporciona con JSON generado en el servidor utilizando</Value>
+        </Property>
+        <Property>
+            <Name>appFeature7a</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>The database connections and data processing is managed on the server side using</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Les connexions de base de données et le traitement des données sont gérées sur le côté serveur à l'aide</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Le connessioni al database e l'elaborazione dei dati è gestito dal lato server utilizzando</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Las conexiones de base de datos y procesamiento de datos se gestiona en el servidor utilizando</Value>
+        </Property>
+        <Property>
+            <Name>appFeature7b</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>and plain old Java objects as the Entities</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">et les objets Java simples vieux que les entités</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">e la pianura vecchi oggetti Java come le Entità</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">y lisos viejos objetos de Java como las Entidades</Value>
+        </Property>
+        <Property>
+            <Name>appFeature8a</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>The</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Le</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Gli</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">La</Value>
+        </Property>
+        <Property>
+            <Name>appFeature8b</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>is utilized to extend JAX-RS, along with its annotations, in the generation of JSON from plain old Java objects</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">est utilisé pour étendre JAX-RS, avec ses annotations, dans la génération de JSON à partir de vieux objets Java simples</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">è utilizzato per estendere JAX-RS, insieme con le sue annotazioni, nella generazione di JSON da Plain Old oggetti Java</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">se utiliza para extender JAX-RS, junto con sus anotaciones, en la generación de objetos JSON del Plain Old Java</Value>
+        </Property>
+        <Property>
+            <Name>appFeature9</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Server side service delegation prior to SSI processing is based on the</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Délégation de service du côté du serveur avant le traitement SSI est basé sur l'</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Server di delega di servizio laterale prima della trasformazione SSI si basa sulla</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Delegación de servicio del lado del servidor antes de la elaboración de SSI se basa en la</Value>
+        </Property>
+        <Property>
+            <Name>appFeature10</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>and localization features for content and CSS3 styling</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">et les fonctionnalités de localisation de contenu et de style CSS3</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">e le funzionalità di localizzazione per i contenuti e CSS3 per lo styling</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">y características de localización de contenido y de estilo CSS3</Value>
+        </Property>
+        <Property>
+            <Name>appFeature11</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Production mode features that help improve server side response and Web browser rendering performance</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Caractéristiques du mode de production qui contribuent à améliorer la réponse du côté serveur et les performances de rendu du navigateur Web</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Caratteristiche della modalità di produzione che contribuiscono a migliorare la risposta lato server e le prestazioni di rendering del browser Web</Value>
+            <Value disabled="true"></Value>
+            <Value disabled="true"></Value>
+            <Value disabled="false">Las características del modo de producción que ayudan a mejorar la respuesta del lado del servidor y rendimiento de la representación navegador Web</Value>
+        </Property>
+    </Records>
+</MultiProperties>
