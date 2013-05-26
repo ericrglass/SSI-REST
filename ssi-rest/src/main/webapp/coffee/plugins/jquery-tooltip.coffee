@@ -80,7 +80,7 @@
       clearTimeout(delayShow)
       delayShow = setTimeout ->
         tooltip.css({"opacity": 0, "display": "block"}).text(trigger.attr('data-title'))
-        $.each ['disabled', 'info', 'alert', 'warning', 'error', 'success', 'green', 'blue', 'purple', 'yellow', 'orange', 'red', 'asphalt'], (index, value) ->
+        $.each ['disabled', 'info', 'alert', 'warning', 'error', 'success', 'green', 'turquoise', 'blue', 'purple', 'pink', 'yellow', 'orange', 'red', 'asphalt'], (index, value) ->
           if trigger.hasClass(value)
             tooltip.addClass(value)
         setPosition(trigger)

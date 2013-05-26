@@ -89,7 +89,7 @@
             "opacity": 0,
             "display": "block"
           }).text(trigger.attr('data-title'));
-          $.each(['disabled', 'info', 'alert', 'warning', 'error', 'success', 'green', 'blue', 'purple', 'yellow', 'orange', 'red', 'asphalt'], function(index, value) {
+          $.each(['disabled', 'info', 'alert', 'warning', 'error', 'success', 'green', 'turquoise', 'blue', 'purple', 'pink', 'yellow', 'orange', 'red', 'asphalt'], function(index, value) {
             if (trigger.hasClass(value)) {
               return tooltip.addClass(value);
             }

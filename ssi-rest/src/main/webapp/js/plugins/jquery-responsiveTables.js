@@ -43,7 +43,16 @@
             });
           }
         }
-        $("tr th, tr td", elem).css("width", Math.floor(100 / columns) + "%");
+        $("tr th, tr td", elem).each(function() {
+          var width;
+
+          if ($(this).attr('data-width') !== '') {
+            width = parseInt($(this).attr('data-width'));
+          } else {
+            width = Math.floor(100 / columns);
+          }
+          return $(this).css("width", width + "%");
+        });
         $("tr th, tr td", elem).css("height", Math.floor(100 / rows) + "%");
         fontSize = Math.floor(Math.max(Math.min(elem.width() / settings.compressor, parseFloat(settings.maxSize)), parseFloat(settings.minSize)));
         $("tr th, tr td", elem).css("font-size", fontSize + "px");

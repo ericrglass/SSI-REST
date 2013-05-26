@@ -81,34 +81,34 @@
   }
   @for $i from 1 through length($state-name) {
     &.#{nth($state-name, $i)} {
-      background-color:lighten(nth($state-code, $i),10%);
-      border-color:#{nth($state-code, $i)};
-      color:#{nth($state-text, $i)};
+      background-color:nth($state-code, $i);
+      border-color:darken(nth($state-code, $i),10%);
+      color:nth($state-text, $i);
       &.top.right, &.top.left {
         &:after, &:before {
-          border-top-color:lighten(nth($state-code, $i),10%);
+          border-top-color:nth($state-code, $i);
         }
       }
       &.bottom.right, &.bottom.left {
         &:after, &:before {
-          border-bottom-color:lighten(nth($state-code, $i),10%);
+          border-bottom-color:nth($state-code, $i);
         }
       }
     }
   }
   @for $i from 1 through length($modifier-name) {
     &.#{nth($modifier-name, $i)} {
-      background-color:lighten(nth($modifier-code, $i),10%);
-      border-color:#{nth($modifier-code, $i)};
-      color:#{nth($modifier-text, $i)};
+      background-color:nth($modifier-code, $i);
+      border-color:darken(nth($modifier-code, $i),10%);
+      color:nth($modifier-text, $i);
       &.top.right, &.top.left {
         &:after, &:before {
-          border-top-color:lighten(nth($modifier-code, $i),10%);
+          border-top-color:nth($modifier-code, $i);
         }
       }
       &.bottom.right, &.bottom.left {
         &:after, &:before {
-          border-bottom-color:lighten(nth($modifier-code, $i),10%);
+          border-bottom-color:nth($modifier-code, $i);
         }
       }
     }

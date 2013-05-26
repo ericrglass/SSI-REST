@@ -37,7 +37,12 @@
           $this.parents().each ->
             $(this).css "height", "100%"
       # set column widths
-      $("tr th, tr td", elem).css "width", Math.floor(100 / columns) + "%"
+      $("tr th, tr td", elem).each ->
+        if $(this).attr('data-width') != ''
+          width = parseInt($(this).attr('data-width'))
+        else
+          width = Math.floor(100 / columns)
+        $(this).css "width", width + "%"
       # set row heights
       $("tr th, tr td", elem).css "height", Math.floor(100 / rows) + "%"
       # set cell font sizes

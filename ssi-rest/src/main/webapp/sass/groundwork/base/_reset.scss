@@ -30,12 +30,13 @@
 //  |                  B  O  R  D  E  R                  |
 //  | ---------------------------------------------------|
 //
-//  NOTE: Padding and border are calculated within an 
-//        element's specified width instead of its total 
+//  NOTE: Padding and border are calculated within an
+//        element's specified width instead of its total
 //        width being increased by these properties
 //
 //
 // =======================================================
+
 
 %everything {
   @include box-sizing(border-box);
@@ -44,14 +45,12 @@
 
 %document {
   -webkit-text-size-adjust:none;
-  line-height:1;
 }
 
 %html5-elements {
   margin:0;
   padding:0;
   border: 0;
-  font-size:1em;
   font:inherit;
   vertical-align:baseline;
 }
@@ -65,13 +64,13 @@
   border-spacing:0;
 }
 
-@if $tags {
+@if $reset {
   *, *:after, *:before {
     @extend %everything;
   }
-  // reset all $html5-elements (configured in _variables.scss)
-  @for $i from 1 through length($html5-elements) {
-    #{nth($html5-elements, $i)} { @extend %html5-elements; }
+  // reset all $reset-elements (configured in _variables.scss)
+  @for $i from 1 through length($reset-elements) {
+    #{nth($reset-elements, $i)} { @extend %html5-elements; }
   }
   header, footer, aside, menu, nav, section, article, details {
     @extend %block-elements;

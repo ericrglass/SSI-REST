@@ -13,7 +13,6 @@
 
 %legend {
   font-weight:900;
-  // font-size:0.8em;
   color:darken($background-color, 35%);
   margin-bottom:0;
 }
@@ -29,7 +28,6 @@
   margin:0;
   padding:0.4em;
   font-family:monospace;
-  // font-size:1em;
   line-height:1.5;
   height:2.25em;
   background:white;
@@ -107,7 +105,7 @@
   }
 }
 
-%select {
+%custom-select {
   -ms-appearance:none;
   -o-appearance:none;
   -moz-appearance:none;
@@ -117,7 +115,6 @@
   background:none;
   padding:0.4em;
   font-family:monospace;
-  // font-size:1em;
   line-height:1.5;
   height:2.25em;
   padding-right:2.5em;
@@ -145,7 +142,6 @@
   margin:0;
   padding:0.4em;
   font-family:monospace;
-  // font-size:1em;
   line-height:1.25;
   height:2.25em;
   text-align:center;
@@ -165,30 +161,27 @@
 }
 
 @if $tags {
-  fieldset {
-    @extend %fieldset;
-  }
-  legend {
-    @extend %legend;
-  }
-  label {
-    @extend %label;
-  }
-  input, select, textarea {
-    @extend %field;
-  }
-  input {
-    @extend %input;
-  }
-  textarea {
-    @extend %textarea;
-  }
+  $elements: fieldset legend label input select textarea;
+	@for $i from 1 through length($elements) {
+		$element: nth($elements, $i);
+		@if not index($tag-elements, $element) == false {
+			#{$element} {
+				@extend %#{$element};
+				@if $element == input or $element == select or $element == textarea {
+					@extend %field;
+				}
+				@if $element == textarea {
+					@extend %textarea;
+				}
+			}
+		}
+	}
 
   @if $classes {
     .select-wrap {
       @extend %select-wrap;
       select {
-        @extend %select;
+        @extend %custom-select;
       }
     }
   }
@@ -232,7 +225,7 @@
   .select-wrap {
     @extend %select-wrap;
     .select {
-      @extend %select;
+      @extend %custom-select;
     }
   }
   .radio-list {

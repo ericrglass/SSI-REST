@@ -30,7 +30,6 @@
   @return $number;
 }
 
-
 // ====================
 //      utilities
 // ====================
@@ -76,6 +75,12 @@
   -moz-filter: drop-shadow($x $y $blur $color); // Firefox
   -webkit-filter: drop-shadow($x $y $blur $color); // Webkit (Safari, Chrome, other)
   filter: drop-shadow($x $y $blur $color);
+  // make filter: drop-shadow not look like poo on retina screens
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 // inner box shadow
@@ -201,7 +206,7 @@
 
 
 // ====================
-//       fonts 
+//       fonts
 // ====================
 
 // font stacks
