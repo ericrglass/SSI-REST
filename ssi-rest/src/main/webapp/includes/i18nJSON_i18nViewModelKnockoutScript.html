@@ -1,0 +1,13 @@
+<!--#include file="i18nTextKnockoutBindingHandlerScript.html" -->
+<script>
+var i18nJSON = {};
+var i18nViewModel = null;
+if (!window.ko || (window.ko === null) || !ko.mapping || (ko.mapping === null)) {
+  alert('The knockout and/or knockout.mapping JavaScript libraries are missing, '
+	  + 'make sure they are both loaded before using the i18nJSON_i18nViewModelKnockoutScript.html include.');
+} else {
+  i18nJSON = <!--#echo var="I18N_JSON" encoding="none" -->;
+  i18nViewModel = ko.mapping.fromJS(i18nJSON);
+  ko.applyBindings(i18nViewModel);
+}
+</script>
