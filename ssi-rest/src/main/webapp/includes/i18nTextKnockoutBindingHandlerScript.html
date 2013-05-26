@@ -1,5 +1,7 @@
 <script>
-if (ko && (ko != null)) {
+if (!window.ko || (window.ko === null) || !ko.bindingHandlers || (ko.bindingHandlers === null)) {
+  alert('The knockout JavaScript library is missing, make sure it is loaded before using the i18nTextKnockoutBindingHandlerScript.html include.');
+} else {
   ko.bindingHandlers.i18nText = {
     origText: null,
     init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
