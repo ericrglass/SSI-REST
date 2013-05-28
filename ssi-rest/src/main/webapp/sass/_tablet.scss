@@ -22,3 +22,41 @@
   @include firstColumn;
 	//  margin-top: .625em;
 }
+
+// bootstrap - _responsive-767px-max.scss
+/* @media (max-width: 767px) { */
+// FORM FIELDS
+// -----------
+// Make span* classes full width
+.input-large,
+.input-xlarge,
+.input-xxlarge,
+input[class*="span"],
+select[class*="span"],
+textarea[class*="span"],
+.uneditable-input {
+  @include input-block-level();
+}
+// But don't let it screw up prepend/append inputs
+.input-prepend input,
+.input-append input,
+.input-prepend input[class*="span"],
+.input-append input[class*="span"] {
+  display: inline-block; // redeclare so they don't wrap to new lines
+  width: auto;
+}
+.controls-row [class*="span"] + [class*="span"] {
+  margin-left: 0;
+}
+
+// Modals
+.modal {
+  position: fixed;
+  top:   20px;
+  left:  20px;
+  right: 20px;
+  width: auto;
+  margin: 0;
+  &.fade  { top: -100px; }
+  &.fade.in { top: 20px; }
+}
