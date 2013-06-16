@@ -8,6 +8,7 @@ import javax.ws.rs.core.Application;
 
 import com.github.ssi_rest.jaxrs.provider.SsiRestExceptionMapper;
 import com.github.ssi_rest.jaxrs.resource.DiscountCodeBean;
+import com.github.ssi_rest.jaxrs.resource.UserProfileFormResource;
 
 @ApplicationPath(SsiRestApplication.PATH)
 public class SsiRestApplication extends Application {
@@ -20,6 +21,7 @@ public class SsiRestApplication extends Application {
 
 		// JAX-RS Resources
 		jaxrsClasses.add(DiscountCodeBean.class);
+		jaxrsClasses.add(UserProfileFormResource.class);
 
 		// JAX-RS Providers, MessageBodyWriters, and MessageBodyReaders
 		jaxrsClasses.add(JsonMessageProvider.class);

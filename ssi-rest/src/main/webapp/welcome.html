@@ -73,19 +73,21 @@
       </section>
     </article>
   </div>
-<!--#include file="includes/footer.html" -->
+<!--#include file="includes/footerWithMenu.html" -->
 <!--#include file="includes/jqueryWithFirstJavaScriptLibraries.html" -->
 <!-- Web page specific JavaScript libraries goes here... -->
 <script src="js/knockout-2.2.1.min.js"></script>
 <script src="js/knockout.mapping-2.4.1.min.js"></script>
+<script src="js/plugins/bootstrap-modal-2.3.1.js"></script>
+<script src="js/plugins/jquery.json-2.4.min.js"></script>
+<script src="js/plugins/jquery.serializeJSON-1.0.1.min.js"></script>
 <!--#include file="includes/scriptBeforeBodyEnd.html" -->
-<!--#include file="includes/i18nTextKnockoutBindingHandlerScript.html" -->
+<!--#include file="includes/footerWithMenuScript.html" -->
+<!--#include file="includes/i18nJSON_i18nViewModelKnockoutScript.html" -->
 <!-- Web page specific script goes here... -->
 <script>
-var i18nJSON = <!--#echo var="I18N_JSON" encoding="none" -->;
-var i18nViewModel = ko.mapping.fromJS(i18nJSON);
-ko.applyBindings(i18nViewModel);
-if (i18nJSON.i18n.title && (i18nJSON.i18n.title !== null) && (i18nJSON.i18n.title.length > 0)) {
+if (window.i18nJSON && (window.i18nJSON !== null) && i18nJSON.i18n && (i18nJSON.i18n !== null)
+	&& i18nJSON.i18n.title && (i18nJSON.i18n.title !== null) && (i18nJSON.i18n.title.length > 0)) {
   document.title = i18nJSON.i18n.title;
 }
 </script>

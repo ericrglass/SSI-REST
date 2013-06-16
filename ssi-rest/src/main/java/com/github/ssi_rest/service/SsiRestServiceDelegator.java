@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.github.ssi_rest.SsiRestLogger;
 import com.github.ssi_rest.jaxrs.resource.DiscountCodeBean;
+import com.github.ssi_rest.jaxrs.resource.WelcomeBean;
 
 @Stateless
 public class SsiRestServiceDelegator implements IServiceDelegator {
@@ -17,7 +18,10 @@ public class SsiRestServiceDelegator implements IServiceDelegator {
 	@Override
 	public void processRequest(HttpServletRequest req, String service,
 			String action, boolean debug) {
-		if ("discountCode".equalsIgnoreCase(service)) {
+		if (WelcomeBean.SERVICE_NAME.equalsIgnoreCase(service)) {
+			WelcomeBean bean = new WelcomeBean();
+			bean.processRequest(req, action, em, debug);
+		} else if (DiscountCodeBean.SERVICE_NAME.equalsIgnoreCase(service)) {
 			DiscountCodeBean bean = new DiscountCodeBean();
 			bean.processRequest(req, action, em, debug);
 		} else if (debug) {

@@ -1,6 +1,7 @@
 package com.github.ssi_rest.servlet;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Level;
 
 import javax.naming.InitialContext;
@@ -13,6 +14,7 @@ import org.apache.catalina.Globals;
 import org.apache.catalina.ssi.SSIServlet_JBossWeb;
 
 import com.github.ssi_rest.SsiRestLogger;
+import com.github.ssi_rest.bean.UserProfileSessionBean;
 import com.github.ssi_rest.service.IServiceDelegator;
 import com.github.ssi_rest.util.I18nUtils;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
@@ -76,6 +78,19 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		if (debug > 0) {
 			log("SsiRestServlet.init() started with service delegator JNDI name '"
 					+ serviceDelegatorJNDIName + "'");
+			log("SsiRestServlet.init() the HTML Compressor feature: "
+					+ ((htmlCompressor) ? "Has been enabled"
+							: "Was not enabled"));
+
+			if (htmlCompressor) {
+				log("SsiRestServlet.init() the CSS compressing with the HTML Compressor: "
+						+ ((compressCSS) ? "Has been enabled"
+								: "Was not enabled"));
+				log("SsiRestServlet.init() the JavaScript compressing with the HTML Compressor: "
+						+ ((compressJS) ? "Has been enabled"
+								: "Was not enabled"));
+			}
+
 			log("SsiRestServlet.init() the i18n feature: "
 					+ ((i18nFeature) ? "Has been enabled" : "Was not enabled"));
 			log("SsiRestServlet.init() the i18n resource bundle JSON feature: "
@@ -121,6 +136,10 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			i18nHtml = i18nHtml(req, html);
 		}
 
+		if (!htmlCompressor) {
+			return i18nHtml;
+		}
+
 		int bypassHTML = i18nHtml.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_HTML);
 
 		if (bypassHTML > -1) {
@@ -163,17 +182,17 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 			}
 
 			if (i18nFeature) {
-				req.setAttribute(REQ_ATTR_I18N_LANG, I18nUtils
-						.getCultureHTMLLangAttributeValue(req.getLocale()));
-				req.setAttribute(REQ_ATTR_I18N_DIR, I18nUtils
-						.getLanguageHTMLDirAttributeValue(req.getLocale()));
+				Locale userLocale = getUserLocale(req);
+				req.setAttribute(REQ_ATTR_I18N_LANG,
+						I18nUtils.getCultureHTMLLangAttributeValue(userLocale));
+				req.setAttribute(REQ_ATTR_I18N_DIR,
+						I18nUtils.getLanguageHTMLDirAttributeValue(userLocale));
 
 				if (i18nResBundleJSON) {
 					req.setAttribute(REQ_ATTR_I18N_JSON, I18nUtils
-							.getCultureResourceBundleJSON(resouce,
-									req.getLocale(), i18nResBundlePackage,
-									i18nResNameSeparator, i18nResNameSuffix,
-									(debug > 0)));
+							.getCultureResourceBundleJSON(resouce, userLocale,
+									i18nResBundlePackage, i18nResNameSeparator,
+									i18nResNameSuffix, (debug > 0)));
 				}
 			}
 
@@ -227,27 +246,48 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		super.requestHandler(req, res);
 	}
 
+	private Locale getUserLocale(HttpServletRequest req) {
+		if (req == null) {
+			return I18nUtils.DEFAULT_LOCALE;
+		}
+
+		Locale userLocale = req.getLocale();
+		Object userProfileSession = null;
+
+		if (req.getSession() != null) {
+			userProfileSession = req.getSession().getAttribute(
+					UserProfileSessionBean.NAME);
+		}
+
+		if ((userProfileSession instanceof UserProfileSessionBean)
+				&& (((UserProfileSessionBean) userProfileSession).getLanguage() != null)) {
+			userLocale = new Locale(
+					((UserProfileSessionBean) userProfileSession).getLanguage(),
+					((UserProfileSessionBean) userProfileSession).getCountry());
+		}
+
+		return userLocale;
+	}
+
 	private String i18nHtml(final HttpServletRequest req, final String html) {
+		Locale userLocale = getUserLocale(req);
+
 		if (debug > 0) {
-			log("Internationalizing the resource '"
-					+ req.getServletPath()
+			log("Internationalizing the resource '" + req.getServletPath()
 					+ "' ; lang=\""
-					+ I18nUtils.getCultureHTMLLangAttributeValue(req
-							.getLocale())
+					+ I18nUtils.getCultureHTMLLangAttributeValue(userLocale)
 					+ "\" ; dir=\""
-					+ I18nUtils.getLanguageHTMLDirAttributeValue(req
-							.getLocale()) + "\"");
+					+ I18nUtils.getLanguageHTMLDirAttributeValue(userLocale)
+					+ "\"");
 		}
 
 		StringBuilder i18nHtml = new StringBuilder(html);
 		boolean langAttrInserted = false;
 		String langAttr = "\""
-				+ I18nUtils.getCultureHTMLLangAttributeValue(req.getLocale())
-				+ "\"";
+				+ I18nUtils.getCultureHTMLLangAttributeValue(userLocale) + "\"";
 		boolean dirAttrInserted = false;
 		String dirAttr = "\""
-				+ I18nUtils.getLanguageHTMLDirAttributeValue(req.getLocale())
-				+ "\"";
+				+ I18nUtils.getLanguageHTMLDirAttributeValue(userLocale) + "\"";
 		int htmlTagPos = i18nHtml.indexOf("<html");
 		int htmlTagClosePos = -1;
 
