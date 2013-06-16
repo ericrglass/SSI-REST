@@ -25,7 +25,8 @@ import com.github.ssi_rest.model.DiscountCode;
 @Stateless
 public class DiscountCodeBean extends AbstractJaxrs {
 
-	public static final String URI_RESOURCE = "/discountCode";
+	public static final String SERVICE_NAME = "discountCode";
+	public static final String URI_RESOURCE = "/" + SERVICE_NAME;
 
 	public static final String REQ_ATTR_LIST_JSON = "DISCOUNT_CODE_LIST_JSON";
 
