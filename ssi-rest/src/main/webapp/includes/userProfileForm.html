@@ -1,0 +1,11 @@
+<form id="userProfileForm" action="#" method="post" class="modal-form">
+  <fieldset>
+    <legend data-bind="i18nText: i18n.selectCultureMessage">Select your preferred culture</legend>
+    <label for="userProfileFormLanguage" data-bind="i18nText: i18n.languageLabel">Language</label>
+    <select id="userProfileFormLanguage" name="userProfileSession[language]" onchange="userProfileFormLoadCountries($(this).val());"></select>
+    <label for="userProfileFormCountry" data-bind="i18nText: i18n.CountryLabel">Country</label>
+    <select id="userProfileFormCountry" name="userProfileSession[country]"></select>
+  </fieldset>
+  <fieldset>
+  </fieldset>
+</form>

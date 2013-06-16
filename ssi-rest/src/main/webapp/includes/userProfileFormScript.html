@@ -1,0 +1,73 @@
+<script>
+var userProfileFormLanguageCountriesMap = null;
+function userProfileFormLoadCountries(language) {
+  if (!window.$ || (window.$ === null)) {
+    return;
+  }
+  $('#userProfileFormCountry').empty();
+  if (!language || (language === null) || (userProfileFormLanguageCountriesMap === null)) {
+	  return;
+  }
+  var langCountryOptions = userProfileFormLanguageCountriesMap[language];
+  if (langCountryOptions === null) {
+    return;
+  }
+  $(langCountryOptions).each(function() {   
+    $('#userProfileFormCountry').append($('<option></option>', {value : this.code}).text(this.description)); 
+  });
+}
+function userProfileFormLoad() {
+  if (!window.$ || (window.$ === null)) {
+    return;
+  }
+  $.ajax({
+    url: '<!--#echo var="USER_PROFILE_FORM_GET_URL" encoding="none" -->',
+    type: 'GET',
+    cache: false,
+    dataType: 'json'
+  }).done(function(data) {
+	  $('#userProfileFormLanguage').empty();
+	  $('#userProfileFormCountry').empty();
+    if (data && (data !== null) && data.userProfileSession && (data.userProfileSession !== null)
+    	   && data.userProfileSession.language && (data.userProfileSession.language !== null)) {
+      if (data.languageOptions && (data.languageOptions !== null)) {
+    	  $(data.languageOptions).each(function() {   
+    	    $('#userProfileFormLanguage').append($('<option></option>', {value : this.code}).text(this.description)); 
+    	  });
+        $('#userProfileFormLanguage').val(data.userProfileSession.language);
+      }
+      if (data.languageCountryOptions && (data.languageCountryOptions !== null)) {
+    	  userProfileFormLanguageCountriesMap = data.languageCountryOptions;
+    	  userProfileFormLoadCountries(data.userProfileSession.language);
+     	  if (data.userProfileSession.country && (data.userProfileSession.country !== null)) {
+          $('#userProfileFormCountry').val(data.userProfileSession.country);
+        }
+      }
+    }
+	});
+}
+function userProfileFormShow() {
+  if (!window.$ || (window.$ === null)) {
+    return;
+  }
+  $('#userProfileFormLanguage').focus();
+}
+function userProfileFormSave() {
+  if (!window.$ || (window.$ === null) || !$.toJSON || ($.toJSON === null)
+	     || !$.fn.serializeJSON || ($.fn.serializeJSON === null)) {
+    return;
+  }
+  $.ajax({
+    url: '<!--#echo var="USER_PROFILE_FORM_PUT_URL" encoding="none" -->',
+    data: $.toJSON($('#userProfileForm').serializeJSON()),
+    contentType: 'application/json',
+    type: 'PUT',
+    cache: false,
+    dataType: 'json'
+  }).done(function(data) {
+    if (data && (data !== null) && data.success) {
+      location.reload();
+    }
+  });
+}
+</script>

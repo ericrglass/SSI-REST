@@ -1,0 +1,36 @@
+<!--#include file="userProfileFormScript.html" -->
+<script>
+function userProfileModalShow() {
+  if (!window.$ || (window.$ === null) || !$.fn.modal || ($.fn.modal === null)) {
+	  return;
+  }
+  userProfileFormLoad();
+  $('#userProfileModal').removeClass('hide').modal('show');
+  userProfileFormShow();
+}
+function userProfileModalHide() {
+  if (!window.$ || (window.$ === null) || !$.fn.modal || ($.fn.modal === null)) {
+    return;
+  }
+  $('#userProfileModal').addClass('hide').modal('hide');
+}
+function userProfileModalSaveChanges() {
+  if (!window.$ || (window.$ === null)) {
+    return;
+  }
+  $('#userProfileModalSaveChanges').addClass('disabled').attr('disabled', 'disabled');
+  userProfileFormSave();
+  $('#userProfileModalSaveChanges').removeClass('disabled').attr('disabled', null);
+  userProfileModalHide();
+}
+if (!window.$ || (window.$ === null) || !$.fn.modal || ($.fn.modal === null)) {
+  alert('The jquery and/or bootstrap-modal JavaScript libraries are missing, '
+    + 'make sure they are both loaded before using the userProfileModalScript.html include.');
+} else {
+  $('#userProfileModal').modal({
+	  backdrop: 'static',
+	  keyboard: false,
+	  show: false
+	});
+}
+</script>

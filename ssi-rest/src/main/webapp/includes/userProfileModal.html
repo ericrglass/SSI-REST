@@ -1,0 +1,15 @@
+<div id="userProfileModal" class="modal fade hide" tabindex="-1" role="dialog" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <h3 id="userProfileModalLabel" data-bind="i18nText: i18n.userProfileLabel">User Profile</h3>
+  </div>
+  <div class="modal-body">
+<!--#include file="userProfileForm.html" -->
+  </div>
+  <div class="modal-footer">
+    <button id="userProfileModalSaveChanges" class="btn" aria-hidden="true"
+            onclick="userProfileModalSaveChanges();"
+            data-bind="i18nText: i18n.saveChangesLabel">Save Changes</button>
+    <button id="userProfileModalCancel" class="btn" data-dismiss="modal" aria-hidden="true"
+            data-bind="i18nText: i18n.cancelLabel">Cancel</button>
+  </div>
+</div>
