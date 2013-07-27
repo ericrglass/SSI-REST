@@ -4,7 +4,7 @@
   <groupId>com.github.ssi_rest</groupId>
   <artifactId>ssi-rest</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>ssi-rest</name>
   <description>ssi-rest Web Application</description>
   <repositories>
@@ -60,6 +60,11 @@
       <groupId>com.googlecode.htmlcompressor</groupId>
       <artifactId>htmlcompressor</artifactId>
       <version>1.5.2</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.github.ssi_servlet</groupId>
+    	<artifactId>ssi-servlet</artifactId>
+    	<version>1.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <properties>
