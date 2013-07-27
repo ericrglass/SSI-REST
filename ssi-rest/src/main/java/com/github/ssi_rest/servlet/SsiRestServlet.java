@@ -1,7 +1,9 @@
 package com.github.ssi_rest.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 
 import javax.naming.InitialContext;
@@ -10,87 +12,49 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Globals;
-import org.apache.catalina.ssi.SSIServlet_JBossWeb;
-
 import com.github.ssi_rest.SsiRestLogger;
 import com.github.ssi_rest.bean.UserProfileSessionBean;
 import com.github.ssi_rest.service.IServiceDelegator;
 import com.github.ssi_rest.util.I18nUtils;
-import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
+import com.github.ssi_servlet.SsiServlet;
 
-public class SsiRestServlet extends SSIServlet_JBossWeb {
+public class SsiRestServlet extends SsiServlet {
 
-	public static final String INIT_PARAM_HTML_COMPRESSOR = "com.github.ssi_rest.servlet.HTML_COMPRESSOR";
-	public static final String INIT_PARAM_COMPRESS_CSS = "com.github.ssi_rest.servlet.COMPRESS_CSS";
-	public static final String INIT_PARAM_COMPRESS_JS = "com.github.ssi_rest.servlet.COMPRESS_JAVASCRIPT";
 	public static final String INIT_PARAM_ENABLE_I18N_FEATURE = "com.github.ssi_rest.servlet.ENABLE_I18N_FEATURE";
 	public static final String INIT_PARAM_ENABLE_I18N_RESOURCE_BUNDLE_JSON = "com.github.ssi_rest.servlet.ENABLE_I18N_RESOURCE_BUNDLE_JSON";
 	public static final String INIT_PARAM_I18N_RESOURCE_BUNDLE_PACKAGE = "com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_PACKAGE";
-	public static final String INIT_PARAM_I18N_RESOURCE_NAME_SEPARATOR = "com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SEPARATOR";
-	public static final String INIT_PARAM_I18N_RESOURCE_NAME_SUFFIX = "com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SUFFIX";
+	public static final String INIT_PARAM_I18N_RESOURCE_BUNDLE_JAVA_CLASS = "com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_JAVA_CLASS";
 
-	public static final String REQ_ATTR_INITIAL_REQUEST_STRING = "com.github.ssi_rest.servlet.INITIAL_REQUEST_STRING";
-	public static final String REQ_ATTR_I18N_LANG = "I18N_LANG";
-	public static final String REQ_ATTR_I18N_DIR = "I18N_DIR";
 	public static final String REQ_ATTR_I18N_JSON = "I18N_JSON";
-
-	public static final String HTML_COMMENT_BYPASS_COMPRESSING_HTML = "<!-- BYPASS_COMPRESSING_HTML -->";
-	public static final String HTML_COMMENT_BYPASS_COMPRESSING_CSS = "<!-- BYPASS_COMPRESSING_CSS -->";
-	public static final String HTML_COMMENT_BYPASS_COMPRESSING_JAVASCRIPT = "<!-- BYPASS_COMPRESSING_JAVASCRIPT -->";
 
 	private static final long serialVersionUID = 4542259497206614997L;
 
 	private String serviceDelegatorJNDIName = null;
-	private boolean htmlCompressor = false;
-	private boolean compressCSS = false;
-	private boolean compressJS = false;
 	private boolean i18nFeature = false;
 	private boolean i18nResBundleJSON = false;
 	private String i18nResBundlePackage = null;
-	private String i18nResNameSeparator = null;
-	private String i18nResNameSuffix = null;
+	private boolean i18nResBundleJavaClass = false;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		serviceDelegatorJNDIName = getInitParameter(IServiceDelegator.INIT_PARAM_JNDI_NAME);
-		htmlCompressor = Boolean
-				.parseBoolean(getInitParameter(INIT_PARAM_HTML_COMPRESSOR));
-		compressCSS = Boolean
-				.parseBoolean(getInitParameter(INIT_PARAM_COMPRESS_CSS));
-		compressJS = Boolean
-				.parseBoolean(getInitParameter(INIT_PARAM_COMPRESS_JS));
 		i18nFeature = Boolean
 				.parseBoolean(getInitParameter(INIT_PARAM_ENABLE_I18N_FEATURE));
 		i18nResBundleJSON = Boolean
 				.parseBoolean(getInitParameter(INIT_PARAM_ENABLE_I18N_RESOURCE_BUNDLE_JSON));
 		i18nResBundlePackage = getInitParameter(INIT_PARAM_I18N_RESOURCE_BUNDLE_PACKAGE);
-		i18nResNameSeparator = getInitParameter(INIT_PARAM_I18N_RESOURCE_NAME_SEPARATOR);
-		i18nResNameSuffix = getInitParameter(INIT_PARAM_I18N_RESOURCE_NAME_SUFFIX);
+		i18nResBundleJavaClass = Boolean
+				.parseBoolean(getInitParameter(INIT_PARAM_I18N_RESOURCE_BUNDLE_JAVA_CLASS));
 
-		if (htmlCompressor || i18nFeature) {
-			// For either the HTML compressor or the I18N feature, force
-			// buffered to be true
+		if (i18nFeature) {
+			// For the I18N feature, force buffered to be true
 			buffered = true;
 		}
 
 		if (debug > 0) {
 			log("SsiRestServlet.init() started with service delegator JNDI name '"
 					+ serviceDelegatorJNDIName + "'");
-			log("SsiRestServlet.init() the HTML Compressor feature: "
-					+ ((htmlCompressor) ? "Has been enabled"
-							: "Was not enabled"));
-
-			if (htmlCompressor) {
-				log("SsiRestServlet.init() the CSS compressing with the HTML Compressor: "
-						+ ((compressCSS) ? "Has been enabled"
-								: "Was not enabled"));
-				log("SsiRestServlet.init() the JavaScript compressing with the HTML Compressor: "
-						+ ((compressJS) ? "Has been enabled"
-								: "Was not enabled"));
-			}
-
 			log("SsiRestServlet.init() the i18n feature: "
 					+ ((i18nFeature) ? "Has been enabled" : "Was not enabled"));
 			log("SsiRestServlet.init() the i18n resource bundle JSON feature: "
@@ -102,100 +66,101 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 						+ (((i18nResBundlePackage == null) || (i18nResBundlePackage
 								.trim().length() == 0)) ? "default"
 								: i18nResBundlePackage) + "'");
-				log("SsiRestServlet.init() the i18n resource name separator '"
-						+ (((i18nResNameSeparator == null) || (i18nResNameSeparator
-								.trim().length() == 0)) ? "_"
-								: i18nResNameSeparator) + "'");
-				log("SsiRestServlet.init() the i18n resource name suffix '"
-						+ (((i18nResNameSuffix == null) || (i18nResNameSuffix
-								.trim().length() == 0)) ? ".properties"
-								: i18nResNameSuffix) + "'");
+				log("SsiRestServlet.init() the i18n resource bundle format is: "
+						+ ((i18nResBundleJavaClass) ? "Java Class"
+								: "Java Properties"));
 			}
 		}
 	}
 
 	@Override
-	protected String processBuffered(HttpServletRequest req, String text) {
-		String html = super.processBuffered(req, text);
+	protected String processBufferedBeforeCompress(HttpServletRequest req,
+			String html) {
+		String preCompHtml = super.processBufferedBeforeCompress(req, html);
 
-		if (!htmlCompressor && !i18nFeature) {
-			return html;
+		if (!i18nFeature) {
+			return preCompHtml;
 		}
 
-		Object initialReqStr = req
-				.getAttribute(REQ_ATTR_INITIAL_REQUEST_STRING);
+		return i18nHtml(req, preCompHtml);
+	}
 
-		if (!req.toString().equals(initialReqStr)) {
-			return html;
+	@Override
+	protected Locale getUserLocale(HttpServletRequest req) {
+		if (req == null) {
+			return I18nUtils.DEFAULT_LOCALE;
 		}
 
-		req.removeAttribute(REQ_ATTR_INITIAL_REQUEST_STRING);
-		String i18nHtml = html;
+		Locale userLocale = req.getLocale();
+		Object userProfileSession = null;
+
+		if (req.getSession() != null) {
+			userProfileSession = req.getSession().getAttribute(
+					UserProfileSessionBean.NAME);
+		}
+
+		if ((userProfileSession instanceof UserProfileSessionBean)
+				&& (((UserProfileSessionBean) userProfileSession).getLanguage() != null)) {
+			userLocale = new Locale(
+					((UserProfileSessionBean) userProfileSession).getLanguage(),
+					((UserProfileSessionBean) userProfileSession).getCountry());
+		}
+
+		return userLocale;
+	}
+
+	@Override
+	protected void requestHandlerInProcessSSI(HttpServletRequest req,
+			HttpServletResponse res) throws IOException {
+		super.requestHandlerInProcessSSI(req, res);
+		String resouce = req.getServletPath();
+
+		if (resouce.startsWith("/")) {
+			if (resouce.length() > 1) {
+				resouce = resouce.substring(1);
+			} else {
+				resouce = "";
+			}
+		}
+
+		if (resouce.endsWith(".html")) {
+			if (resouce.length() > 5) {
+				resouce = resouce.substring(0, resouce.length() - 5);
+			} else {
+				resouce = "";
+			}
+		}
 
 		if (i18nFeature) {
-			i18nHtml = i18nHtml(req, html);
+			Locale userLocale = getUserLocale(req);
+
+			if (i18nResBundleJSON) {
+				Map<String, String> i18nMap = I18nUtils
+						.getCultureResourceBundleMap("global", userLocale,
+								i18nResBundlePackage, i18nResBundleJavaClass,
+								(debug > 0));
+
+				if (i18nMap == null) {
+					i18nMap = new HashMap<String, String>();
+				}
+
+				Map<String, String> resourceMap = I18nUtils
+						.getCultureResourceBundleMap(resouce, userLocale,
+								i18nResBundlePackage, i18nResBundleJavaClass,
+								(debug > 0));
+
+				if (resourceMap != null) {
+					i18nMap.putAll(resourceMap);
+				}
+
+				req.setAttribute(REQ_ATTR_I18N_JSON, I18nUtils
+						.getI18nJSONFromResourceBundleMap(i18nMap, userLocale,
+								(debug > 0)));
+			}
 		}
 
-		if (!htmlCompressor) {
-			return i18nHtml;
-		}
-
-		int bypassHTML = i18nHtml.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_HTML);
-
-		if (bypassHTML > -1) {
-			return i18nHtml;
-		}
-
-		return compressHtml(req, i18nHtml);
-	}
-
-	@Override
-	protected void requestHandler(HttpServletRequest req,
-			HttpServletResponse res) throws IOException {
-		boolean alreadyInProcessSSI = false;
-		Object ssi_flag = req.getAttribute(Globals.SSI_FLAG_ATTR);
-
-		if (ssi_flag != null) {
-			alreadyInProcessSSI = Boolean.parseBoolean(ssi_flag.toString());
-		}
-
-		if (!alreadyInProcessSSI && (serviceDelegatorJNDIName != null)
+		if ((serviceDelegatorJNDIName != null)
 				&& (serviceDelegatorJNDIName.trim().length() > 0)) {
-			req.setAttribute(REQ_ATTR_INITIAL_REQUEST_STRING, req.toString());
-
-			String resouce = req.getServletPath();
-
-			if (resouce.startsWith("/")) {
-				if (resouce.length() > 1) {
-					resouce = resouce.substring(1);
-				} else {
-					resouce = "";
-				}
-			}
-
-			if (resouce.endsWith(".html")) {
-				if (resouce.length() > 5) {
-					resouce = resouce.substring(0, resouce.length() - 5);
-				} else {
-					resouce = "";
-				}
-			}
-
-			if (i18nFeature) {
-				Locale userLocale = getUserLocale(req);
-				req.setAttribute(REQ_ATTR_I18N_LANG,
-						I18nUtils.getCultureHTMLLangAttributeValue(userLocale));
-				req.setAttribute(REQ_ATTR_I18N_DIR,
-						I18nUtils.getLanguageHTMLDirAttributeValue(userLocale));
-
-				if (i18nResBundleJSON) {
-					req.setAttribute(REQ_ATTR_I18N_JSON, I18nUtils
-							.getCultureResourceBundleJSON(resouce, userLocale,
-									i18nResBundlePackage, i18nResNameSeparator,
-									i18nResNameSuffix, (debug > 0)));
-				}
-			}
-
 			Object serviceDelegator = null;
 			NamingException namExc = null;
 
@@ -242,34 +207,9 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 										+ ") could not be called, becasue it did not implement IServiceDelegator.");
 			}
 		}
-
-		super.requestHandler(req, res);
 	}
 
-	private Locale getUserLocale(HttpServletRequest req) {
-		if (req == null) {
-			return I18nUtils.DEFAULT_LOCALE;
-		}
-
-		Locale userLocale = req.getLocale();
-		Object userProfileSession = null;
-
-		if (req.getSession() != null) {
-			userProfileSession = req.getSession().getAttribute(
-					UserProfileSessionBean.NAME);
-		}
-
-		if ((userProfileSession instanceof UserProfileSessionBean)
-				&& (((UserProfileSessionBean) userProfileSession).getLanguage() != null)) {
-			userLocale = new Locale(
-					((UserProfileSessionBean) userProfileSession).getLanguage(),
-					((UserProfileSessionBean) userProfileSession).getCountry());
-		}
-
-		return userLocale;
-	}
-
-	private String i18nHtml(final HttpServletRequest req, final String html) {
+	protected String i18nHtml(final HttpServletRequest req, final String html) {
 		Locale userLocale = getUserLocale(req);
 
 		if (debug > 0) {
@@ -413,57 +353,6 @@ public class SsiRestServlet extends SSIServlet_JBossWeb {
 		}
 
 		return i18nHtml.toString();
-	}
-
-	private String compressHtml(final HttpServletRequest req, final String html) {
-		if (debug > 0) {
-			log("HTML compressing the resource '" + req.getServletPath() + "'");
-		}
-
-		HtmlCompressor compressor = new HtmlCompressor();
-		int bypassCSS = html.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_CSS);
-
-		if (compressCSS && (bypassCSS == -1)) {
-			if (debug > 0) {
-				log("CSS minification for resource '" + req.getServletPath()
-						+ "'");
-			}
-
-			compressor.setCompressCss(true);
-			// --line-break param for Yahoo YUI Compressor
-			compressor.setYuiCssLineBreak(-1);
-		}
-
-		int bypassJS = html.indexOf(HTML_COMMENT_BYPASS_COMPRESSING_JAVASCRIPT);
-
-		if (compressJS && (bypassJS == -1)) {
-			if (debug > 0) {
-				log("JavaScript minification for resource '"
-						+ req.getServletPath() + "'");
-			}
-
-			compressor.setCompressJavaScript(true);
-			// --disable-optimizations param for Yahoo YUI Compressor
-			compressor.setYuiJsDisableOptimizations(true);
-			// --line-break param for Yahoo YUI Compressor
-			compressor.setYuiJsLineBreak(-1);
-			// --nomunge param for Yahoo YUI Compressor
-			compressor.setYuiJsNoMunge(true);
-			// --preserve-semi param for Yahoo YUI Compressor
-			compressor.setYuiJsPreserveAllSemiColons(true);
-		}
-
-		long beginTime = System.currentTimeMillis();
-		int sizeBefore = html.length();
-		String compHtml = compressor.compress(html);
-
-		if (debug > 0) {
-			log("Compression statics for resource '" + req.getServletPath()
-					+ "' - size before: " + sizeBefore + ", size after: "
-					+ compHtml.length() + ", and total time: "
-					+ (System.currentTimeMillis() - beginTime) + "(ms)");
-		}
-		return compHtml;
 	}
 
 }

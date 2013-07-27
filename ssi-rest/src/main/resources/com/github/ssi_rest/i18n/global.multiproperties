@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MultiProperties xmlns="hu.skzs.multiproperties">
+    <Version>1.1</Version>
+    <Name>global</Name>
+    <Description>i18n properties global for all pages</Description>
+    <Handler>Java Properties Handler</Handler>
+    <Columns>
+        <Key>
+            <Width>200</Width>
+        </Key>
+        <Column>
+            <Name>en</Name>
+            <Description>English</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ar</Name>
+            <Description>Arabic</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_ar.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>zh</Name>
+            <Description>Chinese</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_zh.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>fr</Name>
+            <Description>French</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_fr.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>de</Name>
+            <Description>German</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_de.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>iw</Name>
+            <Description>Hebrew</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_iw.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>hi</Name>
+            <Description>Hindi</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_hi.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>it</Name>
+            <Description>Italian</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_it.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ja</Name>
+            <Description>Japanese</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_ja.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>ko</Name>
+            <Description>Korean</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_ko.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+        <Column>
+            <Name>es</Name>
+            <Description>Spanish</Description>
+            <Width>150</Width>
+            <HandlerConfiguration>/ssi-rest/src/main/resources/com/github/ssi_rest/i18n/global_es.properties|true|true|false|false</HandlerConfiguration>
+        </Column>
+    </Columns>
+    <Records>
+        <Property>
+            <Name>userProfileLabel</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>User Profile</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">نبذة عن المستخدم</Value>
+            <Value disabled="false">用户配置文件</Value>
+            <Value disabled="false">Profil Utilisateur</Value>
+            <Value disabled="false">Benutzerprofil</Value>
+            <Value disabled="false">פרופיל משתמש</Value>
+            <Value disabled="false">प्रयोक्ता रेखाचित्र</Value>
+            <Value disabled="false">Profilo Utente</Value>
+            <Value disabled="false">ユーザー プロファイル</Value>
+            <Value disabled="false">사용자 프로필</Value>
+            <Value disabled="false">Perfil del Usuario</Value>
+        </Property>
+        <Property>
+            <Name>selectCultureMessage</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Select your preferred culture</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">اختر ثقافة المفضل لديك</Value>
+            <Value disabled="false">选择您的首选文化</Value>
+            <Value disabled="false">Sélectionnez votre culture préférée</Value>
+            <Value disabled="false">Wählen Sie Ihre bevorzugte Kultur</Value>
+            <Value disabled="false">בחר התרבות המועדפת עליך</Value>
+            <Value disabled="false">अपनी पसंद की संस्कृति का चयन करें</Value>
+            <Value disabled="false">Selezionare la cultura preferita</Value>
+            <Value disabled="false">お好みの文化を選択してください</Value>
+            <Value disabled="false">원하는 문화를 선택</Value>
+            <Value disabled="false">Seleccione el cultivo preferido</Value>
+        </Property>
+        <Property>
+            <Name>languageLabel</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Language</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">لغة</Value>
+            <Value disabled="false">语</Value>
+            <Value disabled="false">Langue</Value>
+            <Value disabled="false">Sprache</Value>
+            <Value disabled="false">שפה</Value>
+            <Value disabled="false">भाषा</Value>
+            <Value disabled="false">Lingua</Value>
+            <Value disabled="false">言語</Value>
+            <Value disabled="false">언어</Value>
+            <Value disabled="false">Idioma</Value>
+        </Property>
+        <Property>
+            <Name>countryLabel</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Country</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">بلد</Value>
+            <Value disabled="false">国家</Value>
+            <Value disabled="false">Pays</Value>
+            <Value disabled="false">Land</Value>
+            <Value disabled="false">מדינה</Value>
+            <Value disabled="false">देश</Value>
+            <Value disabled="false">Nazione</Value>
+            <Value disabled="false">カントリー</Value>
+            <Value disabled="false">국가</Value>
+            <Value disabled="false">País</Value>
+        </Property>
+        <Property>
+            <Name>saveChangesLabel</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Save Changes</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">حفظ التغييرات</Value>
+            <Value disabled="false">保存更改</Value>
+            <Value disabled="false">Enregistrer les Modifications</Value>
+            <Value disabled="false">Änderungen Speichern</Value>
+            <Value disabled="false">שמור שינויים</Value>
+            <Value disabled="false">परिवर्तन सहेजें</Value>
+            <Value disabled="false">Salva le Modifiche</Value>
+            <Value disabled="false">変更を保存</Value>
+            <Value disabled="false">변경 사항을 저장</Value>
+            <Value disabled="false">Guardar Cambios</Value>
+        </Property>
+        <Property>
+            <Name>cancelLabel</Name>
+            <Description></Description>
+            <Disabled>false</Disabled>
+            <DefaultValue>Cancel</DefaultValue>
+            <Value disabled="true"></Value>
+            <Value disabled="false">إلغاء</Value>
+            <Value disabled="false">取消</Value>
+            <Value disabled="false">Résilier</Value>
+            <Value disabled="false">Stornieren</Value>
+            <Value disabled="false">לבטל</Value>
+            <Value disabled="false">रद्द करें</Value>
+            <Value disabled="false">Annullare</Value>
+            <Value disabled="false">キャンセル</Value>
+            <Value disabled="false">취소</Value>
+            <Value disabled="false">Cancelar</Value>
+        </Property>
+    </Records>
+</MultiProperties>

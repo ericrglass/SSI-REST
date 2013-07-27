@@ -29,7 +29,7 @@
   </init-param>
   <init-param>
     <param-name>com.github.ssi_rest.servlet.HTML_COMPRESSOR</param-name>
-    <param-value>true</param-value>
+    <param-value>false</param-value>
   </init-param>
   <init-param>
     <param-name>com.github.ssi_rest.servlet.COMPRESS_CSS</param-name>
@@ -51,14 +51,10 @@
     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_PACKAGE</param-name>
     <param-value>com.github.ssi_rest.i18n</param-value>
   </init-param>
-  <!-- The following initialization parameters will default to the values shown -->
+  <!-- The following initialization parameter will default to the value shown -->
 <!--   <init-param> -->
-<!--     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SEPARATOR</param-name> -->
-<!--     <param-value>_</param-value> -->
-<!--   </init-param> -->
-<!--   <init-param> -->
-<!--     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_NAME_SUFFIX</param-name> -->
-<!--     <param-value>.properties</param-value> -->
+<!--     <param-name>com.github.ssi_rest.servlet.I18N_RESOURCE_BUNDLE_JAVA_CLASS</param-name> -->
+<!--     <param-value>false</param-value> -->
 <!--   </init-param> -->
   <init-param>
    <param-name>expires</param-name>
