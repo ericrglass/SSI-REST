@@ -74,18 +74,6 @@ public class SsiRestServlet extends SsiServlet {
 	}
 
 	@Override
-	protected String processBufferedBeforeCompress(HttpServletRequest req,
-			String html) {
-		String preCompHtml = super.processBufferedBeforeCompress(req, html);
-
-		if (!i18nFeature) {
-			return preCompHtml;
-		}
-
-		return i18nHtml(req, preCompHtml);
-	}
-
-	@Override
 	protected Locale getUserLocale(HttpServletRequest req) {
 		if (req == null) {
 			return I18nUtils.DEFAULT_LOCALE;
@@ -208,151 +196,152 @@ public class SsiRestServlet extends SsiServlet {
 			}
 		}
 	}
-
-	protected String i18nHtml(final HttpServletRequest req, final String html) {
-		Locale userLocale = getUserLocale(req);
-
-		if (debug > 0) {
-			log("Internationalizing the resource '" + req.getServletPath()
-					+ "' ; lang=\""
-					+ I18nUtils.getCultureHTMLLangAttributeValue(userLocale)
-					+ "\" ; dir=\""
-					+ I18nUtils.getLanguageHTMLDirAttributeValue(userLocale)
-					+ "\"");
-		}
-
-		StringBuilder i18nHtml = new StringBuilder(html);
-		boolean langAttrInserted = false;
-		String langAttr = "\""
-				+ I18nUtils.getCultureHTMLLangAttributeValue(userLocale) + "\"";
-		boolean dirAttrInserted = false;
-		String dirAttr = "\""
-				+ I18nUtils.getLanguageHTMLDirAttributeValue(userLocale) + "\"";
-		int htmlTagPos = i18nHtml.indexOf("<html");
-		int htmlTagClosePos = -1;
-
-		if (htmlTagPos == -1) {
-			htmlTagPos = i18nHtml.indexOf("<HTML");
-		}
-
-		if (htmlTagPos > -1) {
-			htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
-		}
-
-		if ((htmlTagPos > -1) && (htmlTagClosePos > htmlTagPos)) {
-			int langAttrPos = i18nHtml.indexOf(" lang=", htmlTagPos);
-
-			if (langAttrPos == -1) {
-				langAttrPos = i18nHtml.indexOf(" LANG=", htmlTagPos);
-			}
-
-			if ((langAttrPos > -1) && (langAttrPos < htmlTagClosePos)) {
-				int spacePos = i18nHtml.indexOf(" ", langAttrPos + 6);
-
-				if ((spacePos > -1) && (spacePos < htmlTagClosePos)) {
-					i18nHtml.replace(langAttrPos + 6, spacePos, langAttr);
-				} else {
-					i18nHtml.replace(langAttrPos + 6, htmlTagClosePos, langAttr);
-				}
-
-				htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
-				langAttrInserted = true;
-			}
-
-			int dirAttrPos = i18nHtml.indexOf(" dir=", htmlTagPos);
-
-			if (dirAttrPos == -1) {
-				dirAttrPos = i18nHtml.indexOf(" DIR=", htmlTagPos);
-			}
-
-			if ((dirAttrPos > -1) && (dirAttrPos < htmlTagClosePos)) {
-				int spacePos = i18nHtml.indexOf(" ", dirAttrPos + 5);
-
-				if ((spacePos > -1) && (spacePos < htmlTagClosePos)) {
-					i18nHtml.replace(dirAttrPos + 5, spacePos, dirAttr);
-				} else {
-					i18nHtml.replace(dirAttrPos + 5, htmlTagClosePos, dirAttr);
-				}
-
-				htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
-				dirAttrInserted = true;
-			}
-		}
-
-		int bodyTagPos = i18nHtml.indexOf("<body");
-		int bodyTagClosePos = -1;
-
-		if (bodyTagPos == -1) {
-			bodyTagPos = i18nHtml.indexOf("<BODY");
-		}
-
-		if (bodyTagPos > -1) {
-			bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
-		}
-
-		if ((bodyTagPos > -1) && (bodyTagClosePos > bodyTagPos)) {
-			if (!langAttrInserted) {
-				int langAttrPos = i18nHtml.indexOf(" lang=", bodyTagPos);
-
-				if (langAttrPos == -1) {
-					langAttrPos = i18nHtml.indexOf(" LANG=", bodyTagPos);
-				}
-
-				if ((langAttrPos > -1) && (langAttrPos < bodyTagClosePos)) {
-					int spacePos = i18nHtml.indexOf(" ", langAttrPos + 6);
-
-					if ((spacePos > -1) && (spacePos < bodyTagClosePos)) {
-						i18nHtml.replace(langAttrPos + 6, spacePos, langAttr);
-					} else {
-						i18nHtml.replace(langAttrPos + 6, bodyTagClosePos,
-								langAttr);
-					}
-
-					bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
-					langAttrInserted = true;
-				}
-			}
-
-			if (!dirAttrInserted) {
-				int dirAttrPos = i18nHtml.indexOf(" dir=", bodyTagPos);
-
-				if (dirAttrPos == -1) {
-					dirAttrPos = i18nHtml.indexOf(" DIR=", bodyTagPos);
-				}
-
-				if ((dirAttrPos > -1) && (dirAttrPos < bodyTagClosePos)) {
-					int spacePos = i18nHtml.indexOf(" ", dirAttrPos + 5);
-
-					if ((spacePos > -1) && (spacePos < bodyTagClosePos)) {
-						i18nHtml.replace(dirAttrPos + 5, spacePos, dirAttr);
-					} else {
-						i18nHtml.replace(dirAttrPos + 5, bodyTagClosePos,
-								dirAttr);
-					}
-
-					bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
-					dirAttrInserted = true;
-				}
-			}
-		}
-
-		if (!langAttrInserted) {
-			if (htmlTagPos > -1) {
-				i18nHtml.insert(htmlTagPos + 5, " lang=" + langAttr);
-			} else if (bodyTagPos > -1) {
-				i18nHtml.insert(bodyTagPos + 5, " lang=" + langAttr);
-			}
-		}
-
-		if (!dirAttrInserted) {
-			if (htmlTagPos > -1) {
-				i18nHtml.insert(htmlTagPos + 5, " dir=" + dirAttr);
-			} else if (bodyTagPos > -1) {
-				i18nHtml.insert(bodyTagPos + 5, " dir=" + dirAttr);
-			}
-		}
-
-		return i18nHtml.toString();
-	}
+	//
+	// protected String i18nHtml(final HttpServletRequest req, final String
+	// html) {
+	// Locale userLocale = getUserLocale(req);
+	//
+	// if (debug > 0) {
+	// log("Internationalizing the resource '" + req.getServletPath()
+	// + "' ; lang=\""
+	// + I18nUtils.getCultureHTMLLangAttributeValue(userLocale)
+	// + "\" ; dir=\""
+	// + I18nUtils.getLanguageHTMLDirAttributeValue(userLocale)
+	// + "\"");
+	// }
+	//
+	// StringBuilder i18nHtml = new StringBuilder(html);
+	// boolean langAttrInserted = false;
+	// String langAttr = "\""
+	// + I18nUtils.getCultureHTMLLangAttributeValue(userLocale) + "\"";
+	// boolean dirAttrInserted = false;
+	// String dirAttr = "\""
+	// + I18nUtils.getLanguageHTMLDirAttributeValue(userLocale) + "\"";
+	// int htmlTagPos = i18nHtml.indexOf("<html");
+	// int htmlTagClosePos = -1;
+	//
+	// if (htmlTagPos == -1) {
+	// htmlTagPos = i18nHtml.indexOf("<HTML");
+	// }
+	//
+	// if (htmlTagPos > -1) {
+	// htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
+	// }
+	//
+	// if ((htmlTagPos > -1) && (htmlTagClosePos > htmlTagPos)) {
+	// int langAttrPos = i18nHtml.indexOf(" lang=", htmlTagPos);
+	//
+	// if (langAttrPos == -1) {
+	// langAttrPos = i18nHtml.indexOf(" LANG=", htmlTagPos);
+	// }
+	//
+	// if ((langAttrPos > -1) && (langAttrPos < htmlTagClosePos)) {
+	// int spacePos = i18nHtml.indexOf(" ", langAttrPos + 6);
+	//
+	// if ((spacePos > -1) && (spacePos < htmlTagClosePos)) {
+	// i18nHtml.replace(langAttrPos + 6, spacePos, langAttr);
+	// } else {
+	// i18nHtml.replace(langAttrPos + 6, htmlTagClosePos, langAttr);
+	// }
+	//
+	// htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
+	// langAttrInserted = true;
+	// }
+	//
+	// int dirAttrPos = i18nHtml.indexOf(" dir=", htmlTagPos);
+	//
+	// if (dirAttrPos == -1) {
+	// dirAttrPos = i18nHtml.indexOf(" DIR=", htmlTagPos);
+	// }
+	//
+	// if ((dirAttrPos > -1) && (dirAttrPos < htmlTagClosePos)) {
+	// int spacePos = i18nHtml.indexOf(" ", dirAttrPos + 5);
+	//
+	// if ((spacePos > -1) && (spacePos < htmlTagClosePos)) {
+	// i18nHtml.replace(dirAttrPos + 5, spacePos, dirAttr);
+	// } else {
+	// i18nHtml.replace(dirAttrPos + 5, htmlTagClosePos, dirAttr);
+	// }
+	//
+	// htmlTagClosePos = i18nHtml.indexOf(">", htmlTagPos);
+	// dirAttrInserted = true;
+	// }
+	// }
+	//
+	// int bodyTagPos = i18nHtml.indexOf("<body");
+	// int bodyTagClosePos = -1;
+	//
+	// if (bodyTagPos == -1) {
+	// bodyTagPos = i18nHtml.indexOf("<BODY");
+	// }
+	//
+	// if (bodyTagPos > -1) {
+	// bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
+	// }
+	//
+	// if ((bodyTagPos > -1) && (bodyTagClosePos > bodyTagPos)) {
+	// if (!langAttrInserted) {
+	// int langAttrPos = i18nHtml.indexOf(" lang=", bodyTagPos);
+	//
+	// if (langAttrPos == -1) {
+	// langAttrPos = i18nHtml.indexOf(" LANG=", bodyTagPos);
+	// }
+	//
+	// if ((langAttrPos > -1) && (langAttrPos < bodyTagClosePos)) {
+	// int spacePos = i18nHtml.indexOf(" ", langAttrPos + 6);
+	//
+	// if ((spacePos > -1) && (spacePos < bodyTagClosePos)) {
+	// i18nHtml.replace(langAttrPos + 6, spacePos, langAttr);
+	// } else {
+	// i18nHtml.replace(langAttrPos + 6, bodyTagClosePos,
+	// langAttr);
+	// }
+	//
+	// bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
+	// langAttrInserted = true;
+	// }
+	// }
+	//
+	// if (!dirAttrInserted) {
+	// int dirAttrPos = i18nHtml.indexOf(" dir=", bodyTagPos);
+	//
+	// if (dirAttrPos == -1) {
+	// dirAttrPos = i18nHtml.indexOf(" DIR=", bodyTagPos);
+	// }
+	//
+	// if ((dirAttrPos > -1) && (dirAttrPos < bodyTagClosePos)) {
+	// int spacePos = i18nHtml.indexOf(" ", dirAttrPos + 5);
+	//
+	// if ((spacePos > -1) && (spacePos < bodyTagClosePos)) {
+	// i18nHtml.replace(dirAttrPos + 5, spacePos, dirAttr);
+	// } else {
+	// i18nHtml.replace(dirAttrPos + 5, bodyTagClosePos,
+	// dirAttr);
+	// }
+	//
+	// bodyTagClosePos = i18nHtml.indexOf(">", bodyTagPos);
+	// dirAttrInserted = true;
+	// }
+	// }
+	// }
+	//
+	// if (!langAttrInserted) {
+	// if (htmlTagPos > -1) {
+	// i18nHtml.insert(htmlTagPos + 5, " lang=" + langAttr);
+	// } else if (bodyTagPos > -1) {
+	// i18nHtml.insert(bodyTagPos + 5, " lang=" + langAttr);
+	// }
+	// }
+	//
+	// if (!dirAttrInserted) {
+	// if (htmlTagPos > -1) {
+	// i18nHtml.insert(htmlTagPos + 5, " dir=" + dirAttr);
+	// } else if (bodyTagPos > -1) {
+	// i18nHtml.insert(bodyTagPos + 5, " dir=" + dirAttr);
+	// }
+	// }
+	//
+	// return i18nHtml.toString();
+	// }
 
 }

@@ -21,23 +21,27 @@
   <url-pattern>*.html</url-pattern>
  </filter-mapping>
  <servlet>
-  <servlet-name>SSI Servlet for RESTful</servlet-name>
+  <servlet-name>SSIServlet</servlet-name>
   <servlet-class>com.github.ssi_rest.servlet.SsiRestServlet</servlet-class>
   <init-param>
-    <param-name>com.github.ssi_rest.service.DelegatorJNDIName</param-name>
-    <param-value>java:global/ssi-rest/SsiRestServiceDelegator</param-value>
-  </init-param>
-  <init-param>
-    <param-name>com.github.ssi_rest.servlet.HTML_COMPRESSOR</param-name>
+    <param-name>com.github.ssi_servlet.HTML_COMPRESSOR</param-name>
     <param-value>false</param-value>
   </init-param>
   <init-param>
-    <param-name>com.github.ssi_rest.servlet.COMPRESS_CSS</param-name>
+    <param-name>com.github.ssi_servlet.COMPRESS_CSS</param-name>
     <param-value>true</param-value>
   </init-param>
   <init-param>
-    <param-name>com.github.ssi_rest.servlet.COMPRESS_JAVASCRIPT</param-name>
+    <param-name>com.github.ssi_servlet.COMPRESS_JAVASCRIPT</param-name>
     <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_servlet.UPDATE_HTML_LANG_DIR_PER_REQUEST</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>com.github.ssi_rest.service.DelegatorJNDIName</param-name>
+    <param-value>java:global/ssi-rest/SsiRestServiceDelegator</param-value>
   </init-param>
   <init-param>
     <param-name>com.github.ssi_rest.servlet.ENABLE_I18N_FEATURE</param-name>
@@ -75,7 +79,7 @@
   <load-on-startup>1</load-on-startup>
  </servlet>
  <servlet-mapping>
-  <servlet-name>SSI Servlet for RESTful</servlet-name>
+  <servlet-name>SSIServlet</servlet-name>
   <url-pattern>*.html</url-pattern>
  </servlet-mapping>
  <welcome-file-list>
