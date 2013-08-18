@@ -9,6 +9,15 @@
   <description>ssi-rest Web Application</description>
   <repositories>
     <repository>
+      <id>ericrglass.mvn.repo</id>
+      <url>https://github.com/ericrglass/mvn-repo/raw/master</url>
+      <!-- use snapshot version -->
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+    <repository>
       <id>EclipseLink</id>
       <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
     </repository>
