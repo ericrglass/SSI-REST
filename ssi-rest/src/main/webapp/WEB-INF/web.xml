@@ -24,6 +24,10 @@
   <servlet-name>SSIServlet</servlet-name>
   <servlet-class>com.github.ssi_rest.servlet.SsiRestServlet</servlet-class>
   <init-param>
+    <param-name>com.github.ssi_servlet.PRODUCTION_MODE</param-name>
+    <param-value>false</param-value>
+  </init-param>
+  <init-param>
     <param-name>com.github.ssi_servlet.HTML_COMPRESSOR</param-name>
     <param-value>false</param-value>
   </init-param>
