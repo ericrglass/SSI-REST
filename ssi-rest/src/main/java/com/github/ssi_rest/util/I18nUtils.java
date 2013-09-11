@@ -7,21 +7,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.github.ssi_servlet.util.I18nJsonUtils;
+import com.github.ssi_servlet.util.I18nResourceUtils;
 
-import com.github.ssi_rest.SsiRestLogger;
-import com.github.ssi_servlet.SsiServletUtils;
+public class I18nUtils extends I18nResourceUtils {
 
-public class I18nUtils extends SsiServletUtils {
-
-	public static final String I18N_JSON_PROPERTY = "i18n";
 	public static final String I18N_JSON_KEY_LANG = "lang";
 	public static final String I18N_JSON_KEY_DIR = "dir";
-	public static final String I18N_JSON_EMPTY_MAP = "{\"" + I18N_JSON_PROPERTY
-			+ "\":{}}";
 
 	public static final List<String> CURRENT_SUPPORTED_LANGUAGES = new ArrayList<String>();
 	public static final Map<String, List<String>> CURRENT_SUPPORTED_LANGUAGE_COUNTRIES = new HashMap<String, List<String>>();
@@ -215,6 +208,10 @@ public class I18nUtils extends SsiServletUtils {
 		CURRENT_SUPPORTED_LANGUAGE_COUNTRIES.put("zh", zhCountries);
 	}
 
+	protected I18nUtils() {
+		super();
+	}
+
 	public static Map<String, String> getCurrentSupportedLanguagesMap(
 			Locale curLocale) {
 		Map<String, String> curSupLangsMap = new LinkedHashMap<String, String>(
@@ -323,178 +320,32 @@ public class I18nUtils extends SsiServletUtils {
 		return curSupLangCountriesMap;
 	}
 
-	public static String getI18nJSONFromResourceBundleMap(
+	public static String getCultureResourceBundleJSONFromMap(
 			Map<String, String> resBundleMap, String language, String country,
 			boolean debug) {
-		String json = null;
-		Map<String, String> jsonMap = resBundleMap;
-
-		if (jsonMap == null) {
-			jsonMap = new HashMap<String, String>();
-		}
-
-		jsonMap.put(I18N_JSON_KEY_LANG,
-				getCultureHTMLLangAttributeValue(language, country));
-		jsonMap.put(I18N_JSON_KEY_DIR,
-				getLanguageHTMLDirAttributeValue(language));
-		I18nJSONBean i18nJSON = new I18nJSONBean();
-		i18nJSON.setI18n(jsonMap);
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-			json = mapper.writeValueAsString(i18nJSON);
-		} catch (Exception e) {
-			json = null;
-			SsiRestLogger.LOGGER.log(
-					Level.SEVERE,
-					"I18nUtils - getI18nJSONFromResourceBundleMap "
-							+ "- had the following exception: "
-							+ e.getMessage(), e);
-		}
-
-		if ((json == null) || (json.length() == 0)) {
-			json = I18N_JSON_EMPTY_MAP;
-		}
-
-		if (debug) {
-			SsiRestLogger.LOGGER.warning("Debug Message: I18nUtils - "
-					+ "getI18nJSONFromResourceBundleMap - the i18n JSON: "
-					+ json);
-		}
-
-		return json.replaceAll("\\\\u", "\\u");
-	}
-
-	public static String getI18nJSONFromResourceBundleMap(
-			Map<String, String> resBundleMap, Locale locale, boolean debug) {
-		if (locale == null) {
-			return getI18nJSONFromResourceBundleMap(resBundleMap, null, null,
-					debug);
-		}
-
-		return getI18nJSONFromResourceBundleMap(resBundleMap,
-				locale.getLanguage(), locale.getCountry(), debug);
-	}
-
-	public static Map<String, String> getCultureResourceBundleMap(
-			String resBaseName, String language, String country,
-			String resPackage, boolean javaClass, boolean debug) {
-		if ((resBaseName == null) || (resBaseName.trim().length() == 0)
-				|| (language == null) || (language.trim().length() == 0)) {
-			return new HashMap<String, String>();
-		}
-
-		StringBuilder resBasePath = new StringBuilder();
-
-		if ((resPackage != null) && (resPackage.trim().length() > 0)) {
-			resBasePath.append(resPackage.trim());
-
-			if (!resBaseName.trim().startsWith(".")
-					&& !resPackage.trim().endsWith(".")) {
-				resBasePath.append(".");
-			}
-		}
-
-		resBasePath.append(resBaseName.trim());
-		Locale culture = null;
-
-		if ((country != null) && (country.trim().length() > 0)) {
-			culture = new Locale(language.trim(), country.trim());
-
-			if (debug) {
-				SsiRestLogger.LOGGER
-						.warning("Debug Message: I18nUtils - "
-								+ "getCultureResourceBundleMap - is using the resource base '"
-								+ resBasePath + "' with the language '"
-								+ language.trim() + "' and the country '"
-								+ country.trim() + "'.");
-			}
-		} else {
-			culture = new Locale(language.trim());
-
-			if (debug) {
-				SsiRestLogger.LOGGER
-						.warning("Debug Message: I18nUtils - "
-								+ "getCultureResourceBundleMap - is using the resource base '"
-								+ resBasePath + "' with the language '"
-								+ language.trim() + "'.");
-			}
-		}
-
-		ResourceBundle bundle = null;
-
-		try {
-			if (javaClass) {
-				bundle = I18nResourceBundle.getI18nClassBundle(
-						resBasePath.toString(), culture);
-			} else {
-				bundle = I18nResourceBundle.getI18nPropertiesBundle(
-						resBasePath.toString(), culture);
-			}
-		} catch (Exception e) {
-			bundle = null;
-		}
-
-		if (debug) {
-			SsiRestLogger.LOGGER
-					.warning("Debug Message: I18nUtils - "
-							+ "getCultureResourceBundleMap - the resource bundle "
-							+ ((bundle == null) ? "could not be found."
-									: "was found and is for locale '"
-											+ (((bundle.getLocale() != null) && (bundle
-													.getLocale().toString()
-													.length() > 0)) ? bundle
-													.getLocale().toString()
-													: "DEFAULT: "
-															+ DEFAULT_LOCALE
-																	.toString())
-											+ "'."));
-		}
-
-		Map<String, String> resMap = null;
-
-		if (bundle instanceof I18nPropertyResourceBundle) {
-			resMap = ((I18nPropertyResourceBundle) bundle).getMap();
-		} else if (bundle != null) {
-			resMap = new HashMap<String, String>();
-
-			for (String key : bundle.keySet()) {
-				if (key == null) {
-					continue;
-				}
-
-				String value = bundle.getString(key);
-
-				if (value == null) {
-					continue;
-				}
-
-				resMap.put(key, value);
-			}
-		}
+		Map<String, String> resMap = resBundleMap;
 
 		if (resMap == null) {
 			resMap = new HashMap<String, String>();
 		}
 
-		if (debug) {
-			SsiRestLogger.LOGGER.warning("Debug Message: I18nUtils - "
-					+ "getCultureResourceBundleMap - the i18n Map: " + resMap);
-		}
-
-		return resMap;
+		resMap.put(I18N_JSON_KEY_LANG,
+				getCultureHTMLLangAttributeValue(language, country));
+		resMap.put(I18N_JSON_KEY_DIR,
+				getLanguageHTMLDirAttributeValue(language));
+		return I18nJsonUtils.getI18nJsonStringFromResourceBundleMap(resMap,
+				debug);
 	}
 
-	public static Map<String, String> getCultureResourceBundleMap(
-			String resBaseName, Locale locale, String resPackage,
-			boolean javaClass, boolean debug) {
-		if ((resBaseName == null) || (resBaseName.trim().length() == 0)
-				|| (locale == null)) {
-			return new HashMap<String, String>();
+	public static String getCultureResourceBundleJSONFromMap(
+			Map<String, String> resBundleMap, Locale locale, boolean debug) {
+		if (locale == null) {
+			return getCultureResourceBundleJSONFromMap(resBundleMap, null,
+					null, debug);
 		}
 
-		return getCultureResourceBundleMap(resBaseName, locale.getLanguage(),
-				locale.getCountry(), resPackage, javaClass, debug);
+		return getCultureResourceBundleJSONFromMap(resBundleMap,
+				locale.getLanguage(), locale.getCountry(), debug);
 	}
 
 	public static String getCultureResourceBundleJSON(String resBaseName,
@@ -502,10 +353,10 @@ public class I18nUtils extends SsiServletUtils {
 			boolean javaClass, boolean debug) {
 		if ((resBaseName == null) || (resBaseName.trim().length() == 0)
 				|| (language == null) || (language.trim().length() == 0)) {
-			return I18N_JSON_EMPTY_MAP;
+			return I18nJsonUtils.I18N_JSON_EMPTY_MAP;
 		}
 
-		return getI18nJSONFromResourceBundleMap(
+		return getCultureResourceBundleJSONFromMap(
 				getCultureResourceBundleMap(resBaseName, language, country,
 						resPackage, javaClass, debug), language, country, debug);
 	}
@@ -514,25 +365,11 @@ public class I18nUtils extends SsiServletUtils {
 			Locale locale, String resPackage, boolean javaClass, boolean debug) {
 		if ((resBaseName == null) || (resBaseName.trim().length() == 0)
 				|| (locale == null)) {
-			return I18N_JSON_EMPTY_MAP;
+			return I18nJsonUtils.I18N_JSON_EMPTY_MAP;
 		}
 
 		return getCultureResourceBundleJSON(resBaseName, locale.getLanguage(),
 				locale.getCountry(), resPackage, javaClass, debug);
-	}
-
-	public static class I18nJSONBean {
-
-		private Map<String, String> i18n;
-
-		public Map<String, String> getI18n() {
-			return i18n;
-		}
-
-		public void setI18n(Map<String, String> i18n) {
-			this.i18n = i18n;
-		}
-
 	}
 
 }

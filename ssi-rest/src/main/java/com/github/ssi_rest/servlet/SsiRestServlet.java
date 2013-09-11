@@ -152,8 +152,8 @@ public class SsiRestServlet extends SsiServlet {
 				}
 
 				req.setAttribute(REQ_ATTR_I18N_JSON, I18nUtils
-						.getI18nJSONFromResourceBundleMap(i18nMap, userLocale,
-								(debug > 0)));
+						.getCultureResourceBundleJSONFromMap(i18nMap,
+								userLocale, (debug > 0)));
 			}
 		}
 
