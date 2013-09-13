@@ -81,16 +81,27 @@
             <Description></Description>
             <Disabled>false</Disabled>
             <DefaultValue>template</DefaultValue>
+            <!-- en -->
             <Value disabled="true"></Value>
+            <!-- ar -->
             <Value disabled="true"></Value>
+            <!-- zh -->
             <Value disabled="true"></Value>
+            <!-- fr -->
             <Value disabled="true"></Value>
+            <!-- de -->
             <Value disabled="true"></Value>
+            <!-- iw -->
             <Value disabled="true"></Value>
+            <!-- hi -->
             <Value disabled="true"></Value>
+            <!-- it -->
             <Value disabled="true"></Value>
+            <!-- ja -->
             <Value disabled="true"></Value>
+            <!-- ko -->
             <Value disabled="true"></Value>
+            <!-- es -->
             <Value disabled="true"></Value>
         </Property>
     </Records>
